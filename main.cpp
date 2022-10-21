@@ -52,11 +52,13 @@ int main(int argc, char** argv) {
 		std::cerr << "Count value:" << COUNT << std::endl;
 		return 1;
 	}
+	std::vector<int> foo = {1,2,3,4};
 	const int seed = atoi(argv[1]);
 	srand(seed);
 
 	ft::vector<std::string> vector_str;
 	ft::vector<int> vector_int;
+	vector_int.value_type
 	ft::stack<int> stack_int;
 	ft::vector<Buffer> vector_buffer;
 	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
