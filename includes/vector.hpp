@@ -442,12 +442,12 @@ namespace ft {
 			if (lhs.size() != rhs.size())
 				return false;
 			return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
-		};
+		}
 
 		template <typename T, typename Allocator>
 		bool operator!=(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs) {
 			return (!(lhs == rhs));
-		};
+		}
 
 		template <typename T, typename Allocator>
 		bool operator< (const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs) {
@@ -473,7 +473,7 @@ namespace ft {
 		template <typename T, typename Allocator>
 		void swap(vector<T,Allocator>& lhs, vector<T,Allocator>& rhs) {
 			lhs.swap(rhs);
-		};
+		}
 
 } //namespace ft
 
