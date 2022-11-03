@@ -433,14 +433,35 @@ namespace ft {
 					alloc_.destroy(--ptr_for_data_);
 				}
 			}
+
+//Non-member function:
+		template <typename U, typename Allocator_f>
+		friend bool operator==(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+		
+		template <typename U, typename Allocator_f>
+		friend bool operator!=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+		
+		template <typename U, typename Allocator_f>
+		friend bool operator< (const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+		
+		template <typename U, typename Allocator_f>
+		friend bool operator> (const vector<U,Allocator_f>& lhs,const vector<U,Allocator_f>& rhs);
+		
+		template <typename U, typename Allocator_f>
+		friend bool operator<=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+		
+		template <typename U, typename Allocator_f>
+		friend bool operator>=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+
 	}; //class vector
 
 //Non-member function overloads:
   
 		template <typename T, typename Allocator>
 		bool operator==(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs) {
-			if (lhs.size() != rhs.size())
+			if (lhs.size() != rhs.size()) {
 				return false;
+			}
 			return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 		}
 
