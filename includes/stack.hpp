@@ -5,7 +5,7 @@
 
 namespace ft {
 
-	template<typename T, typename Container = ft::vector<T>>
+	template<typename T, typename Container = ft::vector<T> >
 	class stack {
 		
 		public:
@@ -36,36 +36,36 @@ namespace ft {
 
 	}; //stack 
 
-		template<typename T, typename Container = ft::vector<T>>
-		bool operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
-			return lhs.c == rhs.c;
-		}
+	template<typename T, typename Container = ft::vector<T>>
+	bool operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+		return lhs.c == rhs.c;
+	}
 
-		template<typename T, typename Container = ft::vector<T>>
-		bool operator< (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
-			return lhs.c < rhs.c;
-		}
+	template<typename T, typename Container = ft::vector<T>>
+	bool operator< (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+		return lhs.c < rhs.c;
+	}
 
-		template<typename T, typename Container = ft::vector<T>>
-		bool operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
-			return lhs.c != rhs.c;			
-		}
+	template<typename T, typename Container = ft::vector<T>>
+	bool operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+		return lhs.c != rhs.c;			
+	}
 
-		template<typename T, typename Container = ft::vector<T>>
-		bool operator> (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
-			return lhs.c > rhs.c;
-		}
+	template<typename T, typename Container = ft::vector<T>>
+	bool operator> (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+		return lhs.c > rhs.c;
+	}
 
-		template<typename T, typename Container = ft::vector<T>>
-		bool operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
-			return lhs.c >= rhs.c;
-		}
+	template<typename T, typename Container = ft::vector<T>>
+	bool operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+		return lhs.c >= rhs.c;
+	}
 
-		template<typename T, typename Container = ft::vector<T>>
-		bool operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
-			return lhs.c <= rhs.c;
-		}
+	template<typename T, typename Container = ft::vector<T>>
+	bool operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+		return lhs.c <= rhs.c;
+	}
 
-} //namespace ft
+}//namespace ft
 
 #endif
