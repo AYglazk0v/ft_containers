@@ -435,23 +435,23 @@ namespace ft {
 			}
 
 //Non-member function:
-		template <typename U, typename Allocator_f>
-		friend bool operator==(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
-		
-		template <typename U, typename Allocator_f>
-		friend bool operator!=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
-		
-		template <typename U, typename Allocator_f>
-		friend bool operator< (const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
-		
-		template <typename U, typename Allocator_f>
-		friend bool operator> (const vector<U,Allocator_f>& lhs,const vector<U,Allocator_f>& rhs);
-		
-		template <typename U, typename Allocator_f>
-		friend bool operator<=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
-		
-		template <typename U, typename Allocator_f>
-		friend bool operator>=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+			template <typename U, typename Allocator_f>
+			friend bool operator==(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+			
+			template <typename U, typename Allocator_f>
+			friend bool operator!=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+			
+			template <typename U, typename Allocator_f>
+			friend bool operator< (const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+			
+			template <typename U, typename Allocator_f>
+			friend bool operator> (const vector<U,Allocator_f>& lhs,const vector<U,Allocator_f>& rhs);
+			
+			template <typename U, typename Allocator_f>
+			friend bool operator<=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
+			
+			template <typename U, typename Allocator_f>
+			friend bool operator>=(const vector<U,Allocator_f>& lhs, const vector<U,Allocator_f>& rhs);
 
 	}; //class vector
 
