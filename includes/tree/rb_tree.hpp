@@ -40,10 +40,18 @@ namespace ft {
 			size_t 			size_;
 
 		private:
-			void claer_node(node_pointer node) {
-				if (node != nil) {
+            node_pointer tree_minimum(node_pointer node) const noexcept {
+                while (node != nil_ && node->left_ != nil_) {
+                    node = node->left_;
+                }
+                return node;
+            }
 
+			node_pointer tree_maximum(node_pointer node) const noexcept {
+				while (node != nil && node->right_ != nil_) {
+					node = node->right_;
 				}
+				return node;
 			}
 
 		public:
@@ -125,6 +133,15 @@ namespace ft {
 					copy_all(node->right_, other->right_);
 				}
 			}
+
+			iterator end() noexcept { return iterator(tree_maximum(root_)); }
+			const_iterator end() const noexcept { return const_iterator(tree_maximum(root_)); }
+			iterator begin() noexcept { return iterator(tree_minimum(root_)); }
+			const_iterator begin() const noexcept { return const_iterator(tree_minimum(root_)); }
+			reverse_iterator rbegin() noexcept { return reverse_iterator(end()); }
+			const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(end()); }
+			reverse_iterator rend() noexcept { return reverse_iterator(begin()) ;}
+			const_reverse_iterator rend() const noexcept { return const_reverse_iterator(begin()) ;}
 
 	};
 } // namespace ft
