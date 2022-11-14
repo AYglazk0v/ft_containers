@@ -62,13 +62,13 @@ namespace ft {
 			}
 
 			RBTree_iterator& operator--() {
-				previous();
+				prev();
 				return (*this);
 			}
 
 			RBTree_iterator operator--(int) {
 				RBTree_iterator tmp(*this);
-				previous();
+				prev();
 				return (tmp);
 			}
 
@@ -79,21 +79,25 @@ namespace ft {
 			friend bool operator!=(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs);
 
 		private:
-			node_ptr maximum(node_ptr node) const {
+			bool tree_is_left_child(node_ptr node) noexcept {
+				return node == node->parent_->left_;
+			}
+
+			node_ptr maximum(node_ptr node) const noexcept {
 				while (node->right_->type != nil) {
 					node = node->right_;
 				}
 				return node;
 			}
 
-			node_ptr minimum(node_ptr node) const {
+			node_ptr minimum(node_ptr node) const noexcept {
 				while (node->left_->type_ != nil) {
 					node = node->left_;
 				}
 				return node;
 			}
 
-			void next() {
+			void next() noexcept {
 				if (node_->type_ == nil) {
 					return ;
 				}
@@ -101,15 +105,15 @@ namespace ft {
 					node_ = minimum(node_->right_);
 					return ;
 				}
-				node_ptr tmp = node_->parent_;
-				while (tmp->type_ != nil && node_ == tmp->right_) {
+			node_ptr tmp = node_->parent_;
+				while (!tree_is_left_child(tmp)) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
 				node_ = tmp;
 			}
 
-			void previous() {
+			void prev() noexcept {
 				if (node_->type_ == nil) {
 					node_ = node_->parent_;
 					return ;
@@ -119,7 +123,7 @@ namespace ft {
 					return ;
 				}
 				node_ptr tmp = node_->parent_;
-				while (tmp->type_ != nil && node_ == tmp->left_) {
+				while (tree_is_left_child(tmp)) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
@@ -195,13 +199,13 @@ namespace ft {
 			}
 
 			RBTree_iterator& operator--() {
-				previous();
+				prev();
 				return (*this);
 			}
 
 			RBTree_iterator operator--(int) {
 				RBTree_const_iterator tmp(*this);
-				previous();
+				prev();
 				return (tmp);
 			}
 
@@ -212,21 +216,21 @@ namespace ft {
 			friend bool operator!=(const RBTree_const_iterator<Iterator1>& lhs, const RBTree_const_iterator<Iterator2>& rhs);
 
 		private:
-			node_ptr maximum(node_ptr node) const {
+			node_ptr maximum(node_ptr node) const noexcept {
 				while (node->right_->type != nil) {
 					node = node->right_;
 				}
 				return node;
 			}
 
-			node_ptr minimum(node_ptr node) const {
+			node_ptr minimum(node_ptr node) const noexcept {
 				while (node->left_->type_ != nil) {
 					node = node->left_;
 				}
 				return node;
 			}
 
-			void next() {
+			void next() noexcept {
 				if (node_->type_ == nil) {
 					return ;
 				}
@@ -235,14 +239,14 @@ namespace ft {
 					return ;
 				}
 				node_ptr tmp = node_->parent_;
-				while (tmp->type_ != nil && node_ == tmp->right_) {
+				while (!tree_is_left_child(tmp)) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
 				node_ = tmp;
 			}
 
-			void previous() {
+			void prev() noexcept {
 				if (node_->type_ == nil) {
 					node_ = node_->parent_;
 					return ;
@@ -252,7 +256,7 @@ namespace ft {
 					return ;
 				}
 				node_ptr tmp = node_->parent_;
-				while (tmp->type_ != nil && node_ == tmp->left_) {
+				while (tree_is_left_child(tmp)) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}

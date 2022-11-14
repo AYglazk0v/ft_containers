@@ -39,6 +39,13 @@ namespace ft {
 			value_compare 	comp_;
 			size_t 			size_;
 
+		private:
+			void claer_node(node_pointer node) {
+				if (node != nil) {
+
+				}
+			}
+
 		public:
 		 	RBTree() : 
 					alloc_node_(allocator_node()),
@@ -63,6 +70,60 @@ namespace ft {
 			RBTree(const RBTree& rhs) : nil_(alloc_node_.allocate(1)), root_(nil_), comp_(rhs.comp_) {
 				alloc_node_.construct(nil_, Node(nil_,nil_,nil_, nil));
 				*this = rhs;
+			}
+
+			RBTree& operator=(const RBTree& rhs) {
+				if (this == &rhs) {
+					return *this;
+				}
+				clear_node(root_);
+				alloc_node_.destroy(nil_);
+				alloc_node_.deallocate(nil_, 1);
+				alloc_node_ = rhs.alloc_node_;
+				alloc_val_ = rhs.alloc_val_;
+				comp_ = rhs.comp_;
+				nil_ = alloc_node_.allocate(1);
+				alloc_node_.construct(nil_, *(rhs.nil_));
+				root_ = nil_;
+				if (rhs.size_ > 0) {
+					root_ = copy_node(rhs.root_);
+					root_->parent_ = nil_;
+					copy_all(root_, rhs.root_);
+				}
+				size_ = rhs.size_;
+				return *this;
+			}
+
+			~RBTree(){
+				clear_node(root_);
+				alloc_node_.deallocate(nil_, 1);
+			}
+
+			node_pointer copy_node(node_pointer other) {
+				node_pointer new_node = alloc_node_.allocate(1);
+				alloc_node_.construct(new_node, Node(other->parent_, other->left_, other->right_, other->type_));
+				if (other->value_) {
+					new_node->value_ = alloc_val_.allocate(1);
+					alloc_val_.construct(new_node->value_, *(other->value_));
+				}
+				return new_node;
+			}
+
+			void copy_all(node_pointer node, node_pointer other) {
+				if (other->left_->type_ == nil) {
+					node->left_ = nil_;
+				} else {
+					node->left_ = copy_node(other->left_);
+					node->left_->parent_ = node;
+					copy_all(node->left_, other->left_);
+				}
+				if (other->right_->type_ == nil) {
+					node->right_ = nil_;
+				} else {
+					node->right_ = copy_node(other->right_);
+					node->right_->parent_ = node;
+					copy_all(node->right_, other->right_);
+				}
 			}
 
 	};
