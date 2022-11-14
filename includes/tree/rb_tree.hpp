@@ -54,6 +54,22 @@ namespace ft {
 				return node;
 			}
 
+			void clear() {
+				destroy(root_);
+				root_= nil_->parent_ = nil_;
+				size_ = 0;
+			}
+
+			void destroy(node_pointer node) {
+				if (node != nil_) {
+					destroy(node->right_);
+					destroy(node->left_);
+					alloc_val_.destroy(node->value_);
+					alloc_val_.deallocate(node->value_, 1);
+					alloc_node_.deallocate(node, 1);
+				}
+			}
+
 		public:
 		 	RBTree() : 
 					alloc_node_(allocator_node()),
@@ -84,7 +100,7 @@ namespace ft {
 				if (this == &rhs) {
 					return *this;
 				}
-				clear_node(root_);
+				destroy(root_);
 				alloc_node_.destroy(nil_);
 				alloc_node_.deallocate(nil_, 1);
 				alloc_node_ = rhs.alloc_node_;
@@ -103,9 +119,13 @@ namespace ft {
 			}
 
 			~RBTree(){
-				clear_node(root_);
+				destroy(root_);
 				alloc_node_.deallocate(nil_, 1);
 			}
+
+			bool empty() const { return size_ == 0; }
+			size_type size() const { return size_; }
+			size_type max_size() const { return alloc_val_.max_size(); }
 
 			node_pointer copy_node(node_pointer other) {
 				node_pointer new_node = alloc_node_.allocate(1);
@@ -143,6 +163,22 @@ namespace ft {
 			reverse_iterator rend() noexcept { return reverse_iterator(begin()) ;}
 			const_reverse_iterator rend() const noexcept { return const_reverse_iterator(begin()) ;}
 
+			void swap(RBTree &rhs) {
+				node_pointer tmp_nil = nil_;
+				node_pointer tmp_root = root_;
+				Compare tmp_cmp = comp_;
+				size_t tmp_sz = size_;
+				
+				nil_ = rhs.nil_;
+				root_ = rhs.root_;
+				comp_ = rhs.comp_;
+				size_ = rhs.size_;
+				
+				rhs.nil_ = tmp_nil;
+				rhs.root_ = tmp_root;
+				rhs.comp_ = tmp_cmp;
+				rhs.size_ - tmp_sz;
+			}
 	};
 } // namespace ft
 
