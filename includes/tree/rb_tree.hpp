@@ -255,6 +255,70 @@ namespace ft {
 			}
 			root_->type_ = black;
 		}
+
+		bool delete_node(const value_type& value) {
+			node_pointer pos = search(value, root_);
+			if (pos == nil_) {
+				return false;
+			}
+			node_pointer x,y;
+			if (pos->left_ == nil_ || pos->right_ == nil_) {
+				y = pos;
+			} else {
+				y = pos->right_;
+				while (y->left_ != nil_) {
+					y = y->left_;
+				}
+			}
+			if (y->left_ != nil_) {
+				x = y->left_;
+			} else {
+				x = y->right_;
+			}
+			if (x != nil_) {
+				x->parent_ = y->parent_;
+			}
+			if (y->parent_ != nil_) {
+				if (y == y->parent_->left_) {
+					y->parent_->left_ = x;
+				} else {
+					y->parent_->right_ = x;
+				}
+			} else {
+				root_ = x;
+			}
+			if (y != pos) {
+				alloc_val_.destroy(pos->value_);
+				alloc_val_.deallocate(pos->value_, 1);
+				pos->value_ = y->value_;
+			} else {
+				alloc_val_.destroy(y->value_);
+				alloc_val_.deallocate(y->value_, 1);
+			}
+			alloc_node_.destroy(y);
+			alloc_node_.deallocate(y, 1);
+			nil_->parent_ = tree_maximum(root_);
+			delete_fixup(x);
+			--size_;
+			return true;
+		}
+
+		node_pointer search(const value_type& value, node_pointer node) const {
+			if (!node || node == nil_) {
+				return node_pointer(nil_);
+			}
+			node_pointer ret_val = node;
+			while (ret_val != nil_) {
+				if (comp_(value, *ret_val->value_)) {
+					return (ret_val);
+				} else {
+					ret_val = comp_(value, *ret_val->value_) ? ret_val->left_ : ret_val->right_;
+				}
+			}
+			return nil_;
+		}
+
+		
 	};
 } // namespace ft
 
