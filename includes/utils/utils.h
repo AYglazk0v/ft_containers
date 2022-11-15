@@ -11,5 +11,6 @@
 # include "is_iter.hpp"
 # include "lexicographical_cmp.hpp"
 # include "nullptr.hpp"
+# include "pair.hpp"
 
 #endif
