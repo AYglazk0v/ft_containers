@@ -179,6 +179,44 @@ namespace ft {
 				rhs.comp_ = tmp_cmp;
 				rhs.size_ - tmp_sz;
 			}
+
+			ft::pair<node_pointer, bool> insert(const value_type& val) {
+				node_pointer curr = root_;
+				node_pointer parent = nil_;
+				node_pointer insert_elem;
+
+				while (curr != nil_) {
+					parent = curr;
+					if (comp_(val, *(parent->value_))) {
+						curr = curr->left_;
+					} else if (comp_(*(parent->value_),val)) {
+						curr = curr->right_;
+					} else {
+						return ft::pair<node_pointer, bool>(curr, false);
+					}
+				}
+				pointer new_val = alloc_val_.allocate(1);
+				alloc_val_.construct(new_val, val);
+				insert_elem = alloc_node_.allocate(1);
+				alloc_node_.construct(insert_elem, Node(parent, nil_, nil_, red, new_val));
+
+				if (parent != nil_) {
+					if (comp_(val, *(parent->value_))) {
+						parent->left_ = insert_elem;
+					} else {
+						parent->right_ = insert_elem;
+					}
+				} else {
+					root_ = insert_elem;
+					nil_->parent_ = insert_elem;
+				}
+
+				nil_->parent_ = tree_maximum(root_);
+				insert_fixup(insert_elem);
+				++size_;
+				return ft::pair<node_pointer, bool>(insert_elem, true);
+			
+			}
 	};
 } // namespace ft
 
