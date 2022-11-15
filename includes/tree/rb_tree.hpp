@@ -215,7 +215,6 @@ namespace ft {
 				insert_fixup(insert_elem);
 				++size_;
 				return ft::pair<node_pointer, bool>(insert_elem, true);
-			
 			}
 	};
 } // namespace ft
