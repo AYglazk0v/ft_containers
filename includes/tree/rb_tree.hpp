@@ -180,7 +180,7 @@ namespace ft {
 				rhs.size_ - tmp_sz;
 			}
 
-			ft::pair<node_pointer, bool> insert(const value_type& val) {
+			ft::pair<node_pointer, bool> insert_node(const value_type& val) {
 				node_pointer curr = root_;
 				node_pointer parent = nil_;
 				node_pointer insert_elem;
@@ -216,6 +216,45 @@ namespace ft {
 				++size_;
 				return ft::pair<node_pointer, bool>(insert_elem, true);
 			}
+
+		void insert_fixup(node_pointer node) {
+			while (node != root_ && node->parent_->type_ == red) {
+				if (node->parent_ == node->parent_->parent_->right_) {
+					node_pointer tmp_node = node->parent_->parent_->right_;
+					if ( tmp_node->type_ == red) {
+						node->parent_->type_ = black;
+						tmp_node->type_ = black;
+						node->parent_->parent_->type_ = red;
+						node = node->parent_->parent_;
+					} else {
+						if (node == node->parent_->right_) {
+							node = node->parent_;
+							left_rotate(node);
+						}
+						node->parent_->type_ = black;
+						node->parent_->parent_->type_ = red;
+						right_rotate(node->parent_->parent_);
+					}
+				} else {
+					node_pointer tmp_node = node->parent_->parent_->left_;
+					if (tmp_node->type_ == red) {
+						node->parent_->type_ = black;
+						tmp_node->type_ = black;
+						node->parent_->parent_->type_ = red;
+						node = node->parent_->parent_;
+					} else {
+						if (node == node->parent_->left_) {
+							node = node->parent_;
+							right_rotate(node);
+						}
+						node->parent_->type_ = black;
+						node->parent_->parent_->type_ = red;
+						left_rotate(node->parent_->parent_);
+					}
+				}
+			}
+			root_->type_ = black;
+		}
 	};
 } // namespace ft
 
