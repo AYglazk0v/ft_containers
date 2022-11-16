@@ -117,7 +117,7 @@ namespace ft {
 				ptr_for_data_ = ptr_start_;
 				pointer rhs_start = rhs.ptr_start_;
 				while (rhs_start != rhs.ptr_for_data_) {
-					alloc_.consturct(ptr_for_data_++, *rhs_start++);
+					alloc_.construct(ptr_for_data_++, *rhs_start++);
 				}
 				return *this;
 			}

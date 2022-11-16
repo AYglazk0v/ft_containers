@@ -39,45 +39,31 @@ namespace ft {
 			void pop()						{ c.pop_back(); }
 
 
-			friend bool operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-			friend bool operator< (const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-			friend bool operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-			friend bool operator> (const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-			friend bool operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-			friend bool operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+			friend bool operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+				return lhs.c == rhs.c;
+			}
+			
+			friend bool operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+				return lhs.c != rhs.c;			
+			}
+
+			friend bool operator< (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+				return lhs.c < rhs.c;
+			}
+
+			friend bool operator> (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+				return lhs.c > rhs.c;
+			}
+			
+			friend bool operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+				return lhs.c >= rhs.c;
+			}
+			
+			friend bool operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+				return lhs.c <= rhs.c;
+			}
 
 	}; //stack 
-
-	template<typename T>
-	bool operator==(const stack<T>& lhs, const stack<T>& rhs) {
-		return lhs.c == rhs.c;
-	}
-
-	template<typename T>
-	bool operator< (const stack<T>& lhs, const stack<T>& rhs) {
-		return lhs.c < rhs.c;
-	}
-
-	template<typename T>
-	bool operator!=(const stack<T>& lhs, const stack<T>& rhs) {
-		return lhs.c != rhs.c;			
-	}
-
-	template<typename T>
-	bool operator> (const stack<T>& lhs, const stack<T>& rhs) {
-		return lhs.c > rhs.c;
-	}
-
-	template<typename T>
-	bool operator>=(const stack<T>& lhs, const stack<T>& rhs) {
-		return lhs.c >= rhs.c;
-	}
-
-	template<typename T>
-	bool operator<=(const stack<T>& lhs, const stack<T>& rhs) {
-		return lhs.c <= rhs.c;
-	}
-
 }//namespace ft
 
 #endif

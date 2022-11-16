@@ -178,12 +178,49 @@ int main(int argc, char** argv) {
 	std::cout << "	vector size after remove some elements: " << vector_int.size() << std::endl;
 
 	std::cout << "[check operator's]: "<< std::endl;
-	std::cout <<"	v1 = v2 ?:" <<  std::boolalpha << (vector_int == second_vector_int) << std::endl;
+	std::cout <<"	v1 == v2 ?:" <<  std::boolalpha << (vector_int == second_vector_int) << std::endl;
 	std::cout <<"	v1 != v2 ?:" << std::boolalpha <<  (vector_int != second_vector_int) << std::endl;
 	std::cout <<"	v1 < v2 ?:" <<  std::boolalpha << (vector_int < second_vector_int) << std::endl;
 	std::cout <<"	v1 <= v2 ?:" << std::boolalpha <<  (vector_int <= second_vector_int) << std::endl;
 	std::cout <<"	v1 > v2 ?:" <<  std::boolalpha << (vector_int > second_vector_int) << std::endl;
 	std::cout <<"	v1 >= v2 ?:" << std::boolalpha <<  (vector_int >= second_vector_int) << std::endl;
 
+
+	std::cout << "____________________CHECK_STACK_________________________" << std::endl;
+	std::cout << "[check empty()]: ";
+	std::cout << "stack is empty? "<< std::boolalpha << stack_int.empty() << std::endl;
+
+	std::cout << "[check push() and top()]: ";
+	stack_int.push(4242);
+	std::cout << "top element = " << stack_int.top() << std::endl;
+	
+	std::cout << "#create new stack"<< std::endl;
+	stack_int = ft::stack<int>();
+	std::cout << "	stack is empty? " << std::boolalpha <<stack_int.empty() << std::endl;
+	for (int i = 1; i < 100; ++i)
+		stack_int.push(i * i % 4242 + 2121);
+	std::cout << "	stack is empty? " << std::boolalpha <<stack_int.empty() << std::endl;
+	std::cout << "	top element = " << stack_int.top() << std::endl; 
+	stack_int.pop();
+	std::cout << "	popped element and new top =" << stack_int.top()<< std::endl;
+
+	std::cout << "[check copy assign]: ";
+	ft::stack<int> second_stack_int = stack_int;
+	
+	if (stack_int != second_stack_int)
+		throw ("Stacks should be equal");
+	std::cout << "stack1 equal stack2" << std::endl;
+
+	std::cout << "[check size() and max_size()]: " << std::endl;
+	std::cout << "sizes s1: " << stack_int.size() << " s2: " << second_stack_int.size() << std::endl;
+
+	std::cout << "[pop second_stack and check operator's]: "<< std::endl;
+	second_stack_int.pop();
+	std::cout <<"	s1 == s2 ?:" <<  std::boolalpha << (stack_int == second_stack_int) << std::endl;
+	std::cout <<"	s1 != s2 ?:" << std::boolalpha <<  (stack_int != second_stack_int) << std::endl;
+	std::cout <<"	s1 < s2 ?:" <<  std::boolalpha << (stack_int < second_stack_int) << std::endl;
+	std::cout <<"	s1 <= s2 ?:" << std::boolalpha <<  (stack_int <= second_stack_int) << std::endl;
+	std::cout <<"	s1 > s2 ?:" <<  std::boolalpha << (stack_int > second_stack_int) << std::endl;
+	std::cout <<"	s1 >= s2 ?:" << std::boolalpha <<  (stack_int >= second_stack_int) << std::endl;
 	return (0);
 }
