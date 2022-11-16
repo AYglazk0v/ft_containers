@@ -79,25 +79,25 @@ namespace ft {
 			friend bool operator!=(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs);
 
 		private:
-			bool tree_is_left_child(node_ptr node) noexcept {
+			bool tree_is_left_child(node_ptr node) {
 				return node == node->parent_->left_;
 			}
 
-			node_ptr maximum(node_ptr node) const noexcept {
+			node_ptr maximum(node_ptr node) const {
 				while (node->right_->type != nil) {
 					node = node->right_;
 				}
 				return node;
 			}
 
-			node_ptr minimum(node_ptr node) const noexcept {
+			node_ptr minimum(node_ptr node) const {
 				while (node->left_->type_ != nil) {
 					node = node->left_;
 				}
 				return node;
 			}
 
-			void next() noexcept {
+			void next() {
 				if (node_->type_ == nil) {
 					return ;
 				}
@@ -113,7 +113,7 @@ namespace ft {
 				node_ = tmp;
 			}
 
-			void prev() noexcept {
+			void prev() {
 				if (node_->type_ == nil) {
 					node_ = node_->parent_;
 					return ;
@@ -198,12 +198,12 @@ namespace ft {
 				return (tmp);
 			}
 
-			RBTree_iterator& operator--() {
+			RBTree_const_iterator& operator--() {
 				prev();
 				return (*this);
 			}
 
-			RBTree_iterator operator--(int) {
+			RBTree_const_iterator operator--(int) {
 				RBTree_const_iterator tmp(*this);
 				prev();
 				return (tmp);
@@ -216,21 +216,21 @@ namespace ft {
 			friend bool operator!=(const RBTree_const_iterator<Iterator1>& lhs, const RBTree_const_iterator<Iterator2>& rhs);
 
 		private:
-			node_ptr maximum(node_ptr node) const noexcept {
+			node_ptr maximum(node_ptr node) const {
 				while (node->right_->type != nil) {
 					node = node->right_;
 				}
 				return node;
 			}
 
-			node_ptr minimum(node_ptr node) const noexcept {
+			node_ptr minimum(node_ptr node) const {
 				while (node->left_->type_ != nil) {
 					node = node->left_;
 				}
 				return node;
 			}
 
-			void next() noexcept {
+			void next() {
 				if (node_->type_ == nil) {
 					return ;
 				}
@@ -246,7 +246,7 @@ namespace ft {
 				node_ = tmp;
 			}
 
-			void prev() noexcept {
+			void prev() {
 				if (node_->type_ == nil) {
 					node_ = node_->parent_;
 					return ;

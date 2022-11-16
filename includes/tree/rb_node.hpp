@@ -20,11 +20,11 @@ namespace ft {
 			RB_Node(pointer parent, pointer left, pointer right, NodeColor type = black, Value value = NULL) :
 					parent_(parent), left_(left), right_(right), type_(type), value_(value) { }
 			
-			RB_Node(reference const &rhs) {
+			RB_Node(reference &rhs) {
 				*this = rhs;
 			}
 
-			RB_Node operator=(const reference rhs) {
+			RB_Node operator=(reference rhs) {
 				if (this == &rhs) {
 					return *this;
 				}

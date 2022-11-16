@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+#if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -52,7 +52,6 @@ int main(int argc, char** argv) {
 		std::cerr << "Count value:" << COUNT << std::endl;
 		return 1;
 	}
-	std::vector<int> foo = {1,2,3,4};
 	const int seed = atoi(argv[1]);
 	srand(seed);
 

@@ -44,14 +44,14 @@ namespace ft {
 			size_t 			size_;
 
 		private:
-            node_pointer tree_minimum(node_pointer node) const noexcept {
+            node_pointer tree_minimum(node_pointer node) const {
                 while (node != nil_ && node->left_ != nil_) {
                     node = node->left_;
                 }
                 return node;
             }
 
-			node_pointer tree_maximum(node_pointer node) const noexcept {
+			node_pointer tree_maximum(node_pointer node) const {
 				while (node != nil && node->right_ != nil_) {
 					node = node->right_;
 				}
@@ -154,14 +154,14 @@ namespace ft {
 				}
 			}
 
-			iterator end() noexcept { return iterator(tree_maximum(root_)); }
-			const_iterator end() const noexcept { return const_iterator(tree_maximum(root_)); }
-			iterator begin() noexcept { return iterator(tree_minimum(root_)); }
-			const_iterator begin() const noexcept { return const_iterator(tree_minimum(root_)); }
-			reverse_iterator rbegin() noexcept { return reverse_iterator(end()); }
-			const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(end()); }
-			reverse_iterator rend() noexcept { return reverse_iterator(begin()) ;}
-			const_reverse_iterator rend() const noexcept { return const_reverse_iterator(begin()) ;}
+			iterator end() { return iterator(tree_maximum(root_)); }
+			const_iterator end() const { return const_iterator(tree_maximum(root_)); }
+			iterator begin() { return iterator(tree_minimum(root_)); }
+			const_iterator begin() const { return const_iterator(tree_minimum(root_)); }
+			reverse_iterator rbegin() { return reverse_iterator(end()); }
+			const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
+			reverse_iterator rend() { return reverse_iterator(begin()) ;}
+			const_reverse_iterator rend() const { return const_reverse_iterator(begin()) ;}
 
 			void swap(RBTree &rhs) {
 				node_pointer tmp_nil = nil_;
@@ -427,8 +427,8 @@ namespace ft {
 				return nil_;
 			}
 
-			value_compare value_compare() const {return comp_};
-			allocator_type get_allocator() const {return alloc_val_};
+			value_compare value_compare() const { return comp_; }
+			allocator_type get_allocator() const {return alloc_val_; }
 
 			iterator find(const value_type &value) {
 				node_pointer find_res = search(value, root_);
