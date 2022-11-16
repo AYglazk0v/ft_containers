@@ -254,8 +254,8 @@ namespace ft {
 					} else {
 						reserve(size() * 2);
 					}
-					alloc_.construct(ptr_for_data_++, value);
 				}
+				alloc_.construct(ptr_for_data_++, value);
 			}
 
 			void pop_back() {

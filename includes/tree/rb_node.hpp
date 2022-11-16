@@ -6,25 +6,24 @@ namespace ft {
 	typedef enum { black, red, nil} NodeColor;
 
 	template<typename Value>
-	struct RB_Node {
+	class RB_Node {
 		public:
-			typedef RB_Node*	pointer;
-			typedef RB_Node&	reference;
+			typedef RB_Node*	node_pointer;
 
-			pointer		parent_;
-			pointer		left_;
-			pointer		right_;
-			NodeColor	type_;
-			Value*		value_;
+			node_pointer		parent_;
+			node_pointer		left_;
+			node_pointer		right_;
+			NodeColor			type_;
+			Value*				value_;
 
-			RB_Node(pointer parent, pointer left, pointer right, NodeColor type = black, Value *value = NULL) :
+			RB_Node(node_pointer parent, node_pointer left, node_pointer right, NodeColor type = black, Value *value = NULL) :
 					parent_(parent), left_(left), right_(right), type_(type), value_(value) { }
 			
 			RB_Node(const RB_Node &rhs) {
 				*this = rhs;
 			}
 
-			RB_Node operator=(const RB_Node& rhs) {
+			RB_Node& operator=(const RB_Node& rhs) {
 				if (this == &rhs) {
 					return *this;
 				}
@@ -36,7 +35,8 @@ namespace ft {
 				return *this;
 			}
 			
-			~RB_Node() {}
+			~RB_Node() {
+			}
 	};
 
 } //namespace ft

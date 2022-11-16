@@ -4,9 +4,9 @@ OBJ_DIR	=	.obj
 
 SRCS	=	main.cpp
 
-CFLAGS	=	-std=c++98 -Wall -Werror -Wextra -g -I ./includes/ -fsanitize=address
+# CFLAGS	=	-std=c++98 -Wall -Werror -Wextra -g -I ./includes/ -fsanitize=address
+CFLAGS	=	-std=c++98 -Wall -Werror -Wextra -g -I ./includes/
 
-# CFLAGS	=	-std=c++98 -Wall -Werror -Wpedantic -Wextra -g
 # CFLAGS	=	-std=c++17 -Wall -Werror -Wpedantic -Wextra -g
 
 OBJ		= 	$(addprefix $(OBJ_DIR)/,$(SRCS:.cpp=.o))

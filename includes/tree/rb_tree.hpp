@@ -73,11 +73,11 @@ namespace ft {
 		public:
 		 	RBTree() : 
 					alloc_node_(allocator_node()),
-					alloc_val_(allocator_type(),
+					alloc_val_(allocator_type()),
 					nil_(alloc_node_.allocate(1)),
 					root_(nil_),
 					comp_(value_compare()),
-					size_(0)) {
+					size_(0) {
 				alloc_node_.construct(nil_, Node(nil_, nil_, nil_, nil));
 			}
 
