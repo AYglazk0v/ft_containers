@@ -318,7 +318,66 @@ namespace ft {
 			return nil_;
 		}
 
-		
+		iterator find(const value_type &value) {
+			node_pointer find_res = search(value, root_);
+			return (find_res == nil_ ? end() : iterator(find_res));
+		}
+
+		const_iterator find(const value_type& value) const {
+			node_pointer find_res = search(value, root_);
+			return (find_res == nil_ ? end() : const_iterator(find_res));
+		}
+
+		size_type count(const value_type& value) const {
+			return (find(value) != end());
+		}
+
+		iterator lower_bound(const value_type& value)
+		{
+			iterator last = end();
+			for (iterator first = begin(); first != last; ++first)
+				if(!_comp(*first, value))
+					return (first);
+			return (last);
+		}
+
+		const_iterator lower_bound(const value_type& value) const
+		{
+			const_iterator last = end();
+			for (const_iterator first = begin(); first != last; ++first)
+				if(!_comp(*first, value))
+					return (first);
+			return (last);
+		}
+
+		iterator upper_bound(const value_type& value)
+		{
+			iterator last = end();
+			for (iterator first = begin(); first != last; ++first)
+				if(_comp(value, *first))
+					return (first);
+			return (last);
+		}
+
+		const_iterator upper_bound(const value_type& value) const
+		{
+			const_iterator last = end();
+			for (const_iterator first = begin(); first != last; ++first)
+				if(_comp(value, *first))
+					return (first);
+			return (last);
+		}
+
+		ft::pair<iterator, iterator> equal_range(const value_type &value)
+		{
+			return (ft::make_pair(lower_bound(value), upper_bound(value)));
+		}
+
+		pair<const_iterator, const_iterator> equal_range(const value_type &value) const
+		{
+			return (ft::make_pair(lower_bound(value), upper_bound(value)));
+		}
+
 	};
 } // namespace ft
 
