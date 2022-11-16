@@ -180,6 +180,54 @@ namespace ft {
 				rhs.size_ - tmp_sz;
 			}
 
+			void left_rotate(node_pointer node) {
+				node_pointer y = node->right_;
+				node->right_ = y->left_;
+				if (y->left_ != nil_) {
+					y->left_->parent_ = node;
+				}
+				if (y != nil_) {
+					y->parent_ = node->parent_;
+				}
+				if (node->parent_ != nil_) {
+					if (node == node->parent_->left_) {
+						node->parent_->left_ = y;
+					} else {
+						node->parent_->right_ = y;
+					}
+				} else {
+					root_ = y;
+				}
+				y->left_ = node;
+				if (node != nil_) {
+					node->parent_ = y;
+				}
+			}
+
+			void right_rotate(node_pointer node) {
+				node_pointer y  = node->left_;
+				node->left_ = y->right_;
+				if (y->right_ != nil_) {
+					y->right_->parent_ = node;
+				}
+				if (y != nil_) {
+					y->parent_ = node->parent_;
+				}
+				if (node->parent_ != nil_) {
+					if (node == node->parent_->right_) {
+						node->parent_->right_ = y;
+					} else {
+						node->parent_->left_ = y;
+					}
+				} else {
+					root_ = y;
+				}
+				y->right_ = node;
+				if (node != nil_) {
+					node->parent_ = y;
+				}
+			}
+
 			ft::pair<node_pointer, bool> insert_node(const value_type& val) {
 				node_pointer curr = root_;
 				node_pointer parent = nil_;
