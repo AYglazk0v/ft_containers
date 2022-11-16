@@ -4,30 +4,30 @@
 namespace ft {
 	template <typename key, typename value>
 	struct pair {
-		typedef key		first_type;
-		typedef value	second_type;
+		typedef key		firsttype;
+		typedef value	secondtype;
 	
-		first_type	first_;
-		second_type second_;
+		firsttype	first;
+		secondtype second;
 	
-		pair(): first_(), second_() {}
+		pair(): first(), second() {}
 
-		pair(const key& f, const value& s) : first_(f), second_(s) {}
+		pair(const key& f, const value& s) : first(f), second(s) {}
 
 		template<typename U, typename V>
-		pair (const pair<U, V>& p) : first_(p.first_), second_(p.second_) {}
+		pair (const pair<U, V>& p) : first(p.first), second(p.second) {}
 	
 		pair& operator=(const pair& p) {
 			if (this == &p) {
 				return *this;
 			}
-			first_ = p.first_;
-			second_ = p.second_;
+			first = p.first;
+			second = p.second;
 			return *this;
 		}
 	
 		friend bool operator==(const pair<key, value>& lhs, const pair<key, value>& rhs) {
-			return lhs.first_ == rhs.first_ && lhs.second_ == rhs.second_;
+			return lhs.first == rhs.first && lhs.second == rhs.second;
 		}
 	
 		friend bool operator!=(const pair<key, value>& lhs, const pair<key, value>& rhs) {
@@ -35,7 +35,7 @@ namespace ft {
 		}
 		
 		friend bool operator<(const pair<key, value>& lhs, const pair<key, value>& rhs) {
-			return lhs.first_ < rhs.first_ || (lhs.first_ <= rhs.first_ && lhs.second_ < rhs.second_);
+			return lhs.first < rhs.first || (lhs.first <= rhs.first && lhs.second < rhs.second);
 		}
 	
 		friend bool operator<=(const pair<key, value>& lhs, const pair<key, value>& rhs) {

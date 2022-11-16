@@ -38,7 +38,7 @@ namespace ft {
 					value_compare(Compare c) : comp(c) {}
 				public:
 					bool operator()(const value_type& x, const value_type& y) const {
-						return comp(x.first_, y.first_);
+						return comp(x.first, y.first);
 						}
 			};
 
@@ -110,7 +110,7 @@ namespace ft {
 
 // element access:
 			mapped_type& operator[](const key_type& rhs) {
-				return (*((this->insert(ft::make_pair(rhs, mapped_type()))).first_)).second_; //UB?
+				return (*((this->insert(ft::make_pair(rhs, mapped_type()))).first)).second; //UB?
 			}
 
 // modifiers:
@@ -120,7 +120,7 @@ namespace ft {
 
 			iterator insert(iterator position, const value_type& x) {
 				(void)position;
-				return tree_.insert_node(x).first_;
+				return tree_.insert_node(x).first;
 			}
 
 			template<typename InputIterator>
