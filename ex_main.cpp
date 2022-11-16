@@ -58,7 +58,6 @@ int main(int argc, char** argv) {
 
 	ft::vector<std::string> vector_str;
 	ft::vector<int> vector_int;
-	vector_int.value_type
 	ft::stack<int> stack_int;
 	ft::vector<Buffer> vector_buffer;
 	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
