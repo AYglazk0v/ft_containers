@@ -41,25 +41,19 @@ namespace ft {
 			typedef typename tree_type::const_reverse_iterator			const_reverse_iterator;
 
 		private:
-			allocator_type	alloc_;
 			tree_type		tree_;
-			key_compare		cmp_;
 		
 // construct/copy/destroy:
 		public:
 			explicit map(const key_compare& cmp = key_compare(), const allocator_type& alloc = allocator_type()) :
-					alloc_(alloc),
 					tree_(tree_type(cmp, alloc)),
-					cmp_(cmp) 
 			{}
 
 			template<typename InputIterator>
 			map(InputIterator first, InputIterator last,
 					const key_compare& cmp = key_compare(),
 					const allocator_type& alloc = allocator_type()) :
-						alloc_(alloc),
-						tree_(tree_type(cmp, alloc)),
-						cmp_(cmp) {
+						tree_(tree_type(cmp, alloc)) {
 				insert(first, last);
 			}
 
@@ -71,9 +65,7 @@ namespace ft {
 				if (this == &rhs) {
 					return (*this)
 				}
-				alloc_ = rhs.alloc_;
-				tree_ = rhs.alloc_;
-				cmp_ = rhs.cmp_;
+				tree_ = rhs.tree_;
 				return *this;
 			}
 
@@ -138,7 +130,7 @@ namespace ft {
 			}
 
 // observers:
-			key_compare key_comp() const { return comp_; }
+			key_compare key_comp() const { return value_comp(); }
 			value_compare value_comp() const { return tree_.value_comp(); }
 
 //map operations:
