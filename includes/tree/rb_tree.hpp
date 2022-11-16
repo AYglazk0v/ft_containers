@@ -54,11 +54,7 @@ namespace ft {
 				return node;
 			}
 
-			void clear() {
-				destroy(root_);
-				root_= nil_->parent_ = nil_;
-				size_ = 0;
-			}
+
 
 			void destroy(node_pointer node) {
 				if (node != nil_) {
@@ -405,6 +401,12 @@ namespace ft {
 					node->type_ = black;
 				}
 			}
+			
+			void clear() {
+				destroy(root_);
+				root_= nil_->parent_ = nil_;
+				size_ = 0;
+			}
 
 			node_pointer search(const value_type& value, node_pointer node) const {
 				if (!node || node == nil_) {
@@ -420,6 +422,8 @@ namespace ft {
 				}
 				return nil_;
 			}
+
+			value_compare value_compare() const {return comp_};
 
 			iterator find(const value_type &value) {
 				node_pointer find_res = search(value, root_);

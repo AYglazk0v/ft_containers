@@ -1,7 +1,6 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include <memory>
 # include "tree/rb_tree.hpp"
 # include "utils/utils.h"
 
@@ -96,13 +95,107 @@ namespace ft {
 			size_type size() const { return tree_.size(); }
 			size_type max_size() const { return tree_.max_size(); }
 
-// 23.3.1.2 element access:
-			// mapped_type& operator[](const key_type& rhs) {
-				// iterator tmp = this->tree_.find(rhs);	
+// element access:
+			mapped_type& operator[](const key_type& rhs) {
+				return (*((this->insert(ft::make_pair(rhs, mapped_type()))).first)).second; //UB?
 			}
+
+// modifiers:
+			pair<iterator, bool> insert(const value_type& x) {
+				return tree_.insert(x);
+			}
+
+			iterator insert(iterator position, const value_type& x) {
+				(void)position;
+				return tree_.insert(x).first;
+			}
+
+			template<class InputIterator>
+			void insert(InputIterator first, InputIterator last) {
+				while (first!=last)
+					tree_.insert(*first++);
+			}
+
+			void erase(iterator position) {
+				tree_.delete_node(*position);
+			}
+
+			size_type erase(const Key& x) {
+				return tree_.delete_node(ft::make_pair(x, mapped_type()));
+			}
+
+			void erase(iterator first, iterator last) {
+				while (first!=last)
+					tree_.delete_node(*first++);
+			}
+
+			void swap(map & other) {
+				tree_.swap(other.tree_);
+			}
+
+			void clear() {
+				tree_.clear();
+			}
+
+// observers:
+			key_compare key_comp() const { return comp_; }
+			value_compare value_comp() const { return tree_.value_comp(); }
+
+//map operations:
+			iterator	find(const Key& x) { return tree_.find(ft::make_pair(x, mapped_type())); }
+			const_iterator find(const key_type& x) const { return tree_.find(ft::make_pair(x, mapped_type())); }
+			size_type count(const Key& x) const { return tree_.count(ft::make_pair(x, mapped_type())); }
+			iterator lower_bound(const key_type& x) { return tree_.lower_bound(ft::make_pair(x, mapped_type())); }	
+			const_iterator lower_bound(const key_type& x) const { return tree_.lower_bound(ft::make_pair(x, mapped_type())); }	
+			iterator upper_bound(const key_type& x) { return tree_.upper_bound(ft::make_pair(x, mapped_type())); }	
+			const_iterator upper_bound(const key_type& x) const { return tree_.upper_bound(ft::make_pair(x, mapped_type())); }
+			pair<iterator, iterator> equal_range(const key_type & x) { return tree_.equal_range(ft::make_pair(x, mapped_type())); }	
+			pair<const_iterator, const_iterator> equal_range(const key_type & x) const { return tree_.equal_range(ft::make_pair(x, mapped_type())); }	
+
+
+			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+			friend bool operator==(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
+					const map<_Key, t_T, t_Compare, t_Alloc>& rhs) {
+				return lhs.tree_ == rhs.tree_;
+			}
+
+			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+			friend bool operator!=(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
+					const map<_Key, t_T, t_Compare, t_Alloc>& rhs) {
+				return !(lhs == rhs);
+			}
+
+			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+			friend bool operator<(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
+					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
+				return lhs.tree_ < rhs.tree_;
+			}
+			
+			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+			friend bool operator>(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
+					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
+				return rhs < lhs;
+			}
+
+			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+			friend bool operator<=(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
+					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
+				return !(lhs > rhs);
+			}
+
+			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+			friend bool operator>=(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
+					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
+				return !(lhs < rhs);
+			}
+
 	}; //map
 
-} // namespace ft
+	template<class t_Key, class t_T, class t_Compare, class t_Alloc>
+	void swap(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs, const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
+		lhs.swap(rhs);
+	}
 
+} // namespace ft
 
 #endif
