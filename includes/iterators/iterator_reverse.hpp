@@ -3,6 +3,9 @@
 
 # include "iterator.hpp"
 
+//https://eel.is/c++draft/random.access.iterators
+//https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf
+
 namespace ft {
 	
 	template <typename Iterator>

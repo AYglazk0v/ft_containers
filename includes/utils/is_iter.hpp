@@ -13,7 +13,8 @@ namespace ft {
 
 	template <typename T> struct is_iter<typename ft::random_access_iterator<T*> > : public true_type {};
 	template <typename T> struct is_iter<typename ft::reverse_iterator<T*> > : public true_type {};
-	template <typename T> struct is_iter<__gnu_cxx::__normal_iterator<T*, std::vector<T> > > : public true_type {};
+	template <typename T> struct is_iter<typename ft::RBTree_iterator<T*> > : public true_type {};
+	// template <typename T> struct is_iter<__gnu_cxx::__normal_iterator<T*, std::vector<T> > > : public true_type {};
 
 } // namespace ft
 

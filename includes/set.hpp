@@ -1,3 +1,16 @@
+/*
+// Set -- ассоциативный контейнер, содержащий отсортированный набор уникальных объектов
+// типа Key. Сортировка осуществляется с помощью функции сравнения ключей Compare.
+// Операции поиска, удаления и вставки имеют логарифмическую сложность. Наборы
+// раелизуются в виде красно-черных деревьев.
+// Использованные материалы:
+//		https://en.cppreference.com/w/cpp/container/set
+//		https://android.googlesource.com/platform/ndk/+/5de42e6621b3d0131472c3f8838b7f0ccf3e8963/sources/cxx-stl/llvm-libc++/libcxx/include/__tree
+//		https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf
+//		https://eel.is/c++draft/set
+//		https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_tree.h
+*/
+
 #ifndef SET_HPP
 # define SET_HPP
 

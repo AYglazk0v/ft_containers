@@ -1,3 +1,15 @@
+/*
+// Map -- отсортированный ассоциативный контейнер, содержащий пары ключ-значение с уникальными ключами.
+// Ключи сортируются с помощью функции сравнения Comapare. Операции поиска, удаления и вставки имеют логарифмическую сложность.
+// Контейнер реализуется на основе красно-черного дерева.
+// Использованные материалы:
+//		https://en.cppreference.com/w/cpp/container/map
+//		https://android.googlesource.com/platform/ndk/+/5de42e6621b3d0131472c3f8838b7f0ccf3e8963/sources/cxx-stl/llvm-libc++/libcxx/include/__tree
+//		https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf
+//		https://eel.is/c++draft/map
+//		https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_tree.h
+*/
+
 #ifndef MAP_HPP
 # define MAP_HPP
 

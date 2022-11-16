@@ -1,3 +1,18 @@
+/*
+// Vector -- последовательный контейнер, который инкапсулирует динамический массив.
+// Сложность (эффективность) обычныйх операций над векторами таков:
+//		Произвольный доступ -- константа О(1).
+//		Вставка или удаление элементов в конце -- О(1)+.
+//		Вставка или удаление элементов - линейно по расстоянию до конца вектора О(n).
+//		Работа с размером вектора -- О(1).
+//		Удаление элеметов из вектора -- О(n).
+// Использованные материалы:
+//		https://en.cppreference.com/w/cpp/container/vector
+//		https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf
+//		https://eel.is/c++draft/vector
+//		https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_vector.h
+*/
+
 #ifndef VECROT_HPP
 # define VECTOR_HPP
 

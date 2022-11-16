@@ -3,6 +3,9 @@
 
 # include "utils.h"
 
+//https://stackoverflow.com/questions/2795023/c-template-typedef
+//https://youtu.be/avnte_HqBKQ?list=PL3BR09unfgciJ1_K_E914nohpiOiHnpsK&t=1641
+
 namespace ft {
 	
 	template <bool B, typename T = void>

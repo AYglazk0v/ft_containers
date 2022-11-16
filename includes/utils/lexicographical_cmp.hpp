@@ -3,10 +3,10 @@
 
 # include "utils.h"
 
-namespace ft {
-
 //https://eel.is/c++draft/alg.lex.comparison
 //https://timsong-cpp.github.io/cppwp/n3337/draft.pdf
+
+namespace ft {
 	
 	template<typename InputIterator1, typename InputIterator2>
 	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1,

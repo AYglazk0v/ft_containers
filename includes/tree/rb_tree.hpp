@@ -7,6 +7,10 @@
 # include "../iterators/iterator_reverse.hpp"
 # include "../utils/utils.h"
 
+//http://algolist.ru/ds/rbtree.php
+//https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/src/c%2B%2B98/tree.cc
+//https://android.googlesource.com/platform/ndk/+/5de42e6621b3d0131472c3f8838b7f0ccf3e8963/sources/cxx-stl/llvm-libc++/libcxx/include/__tree
+
 namespace ft {
 	template<typename Value, typename Compare = std::less<Value>, typename Allocator = std::allocator<Value> >
 	class RBTree {

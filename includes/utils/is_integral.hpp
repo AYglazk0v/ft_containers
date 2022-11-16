@@ -3,6 +3,8 @@
 
 # include "utils.h"
 
+//https://en.cppreference.com/w/cpp/types/is_integral
+
 namespace ft {
 
 	template<typename T, T v>
@@ -30,12 +32,12 @@ namespace ft {
 	template <> struct is_integral<int> : public true_type {};
 	template <> struct is_integral<long> : public true_type {};
 	template <> struct is_integral<char> : public true_type {};
-	// template <> struct is_integral<bool> : public true_type {};
-	// template <> struct is_integral<char32_t> : public true_type {};
-	// template <> struct is_integral<char16_t> : public true_type {};
+	template <> struct is_integral<bool> : public true_type {};
+	template <> struct is_integral<char32_t> : public true_type {};
+	template <> struct is_integral<char16_t> : public true_type {};
 	template <> struct is_integral<wchar_t> : public true_type {};
-	// template <> struct is_integral<long long> : public true_type {};
-	// template <> struct is_integral<unsigned long long> : public true_type {};
+	template <> struct is_integral<long long> : public true_type {};
+	template <> struct is_integral<unsigned long long> : public true_type {};
 
 } //namespace ft
 
