@@ -5,12 +5,14 @@
 	#include <map>
 	#include <stack>
 	#include <vector>
+	#include <set>
 	namespace ft = std;
 #else
 	#include <map.hpp>
 	#include "includes/iterators/RBTree_iterator.hpp"
 	#include <stack.hpp>
 	#include <vector.hpp>
+	#include <set.hpp>
 #endif
 
 #include <stdlib.h>
@@ -314,6 +316,95 @@ int main(int argc, char** argv) {
 	std::cout << "	equal range lower: " << res1->first << " " << res1->second << std::endl;
 	std::cout << "	equal range upper: " << res2->first << " " << res2->second << std::endl;
 	
+	std::cout << "____________________CHECK_SET___________________________" << std::endl;
+	ft::set<int> set_int;
+	std::cout << "[check size() before clear()]: " << set_int.size() << std::endl;
+	set_int.clear();
+	std::cout << "[check size() after clear()]: " << set_int.size() << std::endl;
+	for (int i = 0; i < 1000; ++i)
+		set_int.insert(set_int.begin(), i);
+	std::cout << "[check size() after loop]: " << set_int.size() << std::endl;
+	std::cout << "[check find()]: ";
+	std::cout << "1 element: " << *set_int.find(1) << "; ";
+	std::cout << "55 element: " << *set_int.find(55) << "; ";
+	std::cout << "555 element: " << *set_int.find(555) << std::endl;
+	
+	std::cout << "[check copy assign]: ";
+	ft::set<int> second_set_int = set_int;
+	std::cout << "1 element: " << *second_set_int.find(1) << "; ";
+	std::cout << "55 element: " << *second_set_int.find(55) << "; ";
+	std::cout << "555 element: " << *second_set_int.find(555) << "; " << std::endl;
 
+	ft::set<int>::iterator sit = set_int.begin();
+	ft::set<int>::iterator sit2 = second_set_int.begin();
+	ft::set<int>::iterator site = set_int.end();
+	ft::set<int>::iterator site2 = second_set_int.begin();
+
+	std::cout << "[check equals iterators]: ";
+	while (sit != site && sit2 != site2) {
+		if (*sit != *sit2) {
+			throw ("set's iterators should be equal");
+		}
+		++sit;
+		++sit2;
+	}
+	std::cout << "iterators are equal" << std::endl;
+
+	// std::cout << "[check equals]: ";
+	// if (map_int != secondmap_int) {
+	// 	throw ("Maps should be equal");
+	// }
+	// std::cout << "maps equal" << std::endl;
+
+	// map_int[123] = 333;
+
+	// std::cout << "[check equals afte modification map_int]: ";
+	// if (map_int==secondmap_int) {
+	// 	throw ("Maps shouldn't be equal");
+	// }
+	// std::cout << "maps not equal" << std::endl;
+	
+	// std::cout << "[check erase()]: ";
+	// map_int.erase(123);
+	// std::cout << "	check[123]:" << map_int[123] << std::endl;
+
+	// std::cout << "	Map size before clear " << map_int.size() << std::endl;
+	// map_int.erase(++(++(map_int.begin())));
+	// std::cout << "	Map size after erase() " << map_int.size() << std::endl;
+
+	// std::cout << "[check operator> and swap()]:" << std::endl; 
+	// if (map_int > secondmap_int) {
+	// 	std::cout << "	now first map is bigger than second" << std::endl;
+	// 	map_int.swap(secondmap_int);
+	// 	if (map_int > secondmap_int)
+	// 		throw ("Swap didn't work");
+	// 	std::cout << "	now second is bigger than first -> swap -- OK" << std::endl;
+	// }
+
+	// std::cout << "[check operator[] and find()]:" << std::endl; 
+	// map_int[5555] = 99999;
+	// map_int[5557] = 99599;
+	// mit = map_int.find(5555);
+	// std::cout << "	find(5555) element :" << mit->first << " " << mit->second << std::endl;
+
+	// std::cout << "[check count()]:" << std::endl; 
+	// std::cout << "	count of 5555 elements :" << map_int.count(5555) << std::endl;
+	// std::cout << "	count of 5556 elements :" << map_int.count(5556) << std::endl;
+	// std::cout << "	count of 5557 elements :" << map_int.count(5557) << std::endl;
+
+	// std::cout << "[check lower/upper bound and range]: " << std::endl;
+	// mit = map_int.lower_bound(5000);
+	// ft::map<int, int>::iterator upper = map_int.upper_bound(5000);
+	// ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> result = map_int.equal_range(5000);
+	// ft::map<int, int>::iterator res1 = result.first;
+	// ft::map<int, int>::iterator res2 = result.second;
+
+	// std::cout << "	lower bound element: " << mit->first << " " << mit->second << std::endl;
+	// std::cout << "	upper bound element: " << upper->first << " " << upper->second << std::endl;
+	// std::cout << "	equal range lower: " << res1->first << " " << res1->second << std::endl;
+	// std::cout << "	equal range upper: " << res2->first << " " << res2->second << std::endl;
+
+	(void)argc;
+	(void)argv;
 	return (0);
 }

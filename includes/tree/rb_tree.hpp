@@ -422,11 +422,35 @@ namespace ft {
 						ret_val = comp_(value, *ret_val->value_) ? ret_val->left_ : ret_val->right_;
 					}
 				}
-				return nil_;
+				return ret_val;
 			}
 
 			value_compare value_comp() const { return comp_; }
 			allocator_type get_allocator() const {return alloc_val_; }
+
+			node_pointer search_by_value(const value_type& value) const {
+				node_pointer ret_val = root_;
+				while (ret_val != nil_ ) {
+					if (*ret_val->value_ == value) {
+						return ret_val;
+					} else if (*ret_val->value_> value) {
+						ret_val = ret_val->left_;
+					} else {
+						ret_val = ret_val->right_;
+					}
+				}
+				return ret_val;
+			}
+			
+			iterator find_s(const value_type &value) {
+				node_pointer find_res = search_by_value(value);
+				return (find_res == nil_ ? end() : iterator(find_res));
+			}
+
+			const_iterator find_s(const value_type& value) const {
+				node_pointer find_res = search_by_value(value);
+				return (find_res == nil_ ? end() : const_iterator(find_res));
+			}
 
 			iterator find(const value_type &value) {
 				node_pointer find_res = search(value, root_);
@@ -472,33 +496,41 @@ namespace ft {
 
 			iterator lower_bound(const value_type& value) {
 				iterator last = end();
-				for (iterator first = begin(); first != last; ++first)
-					if(!comp_(*first, value))
+				for (iterator first = begin(); first != last; ++first){
+					if(!comp_(*first, value)) {
 						return (first);
+					}
+				}
 				return (last);
 			}
 
 			const_iterator lower_bound(const value_type& value) const {
 				const_iterator last = end();
-				for (const_iterator first = begin(); first != last; ++first)
-					if(!comp_(*first, value))
+				for (const_iterator first = begin(); first != last; ++first) {
+					if(!comp_(*first, value)) {
 						return (first);
+					}
+				}
 				return (last);
 			}
 
 			iterator upper_bound(const value_type& value) {
 				iterator last = end();
-				for (iterator first = begin(); first != last; ++first)
-					if(comp_(value, *first))
+				for (iterator first = begin(); first != last; ++first) {
+					if(comp_(value, *first)) {
 						return (first);
+					}
+				}
 				return (last);
 			}
 
 			const_iterator upper_bound(const value_type& value) const {
 				const_iterator last = end();
-				for (const_iterator first = begin(); first != last; ++first)
-					if(_comp(value, *first))
+				for (const_iterator first = begin(); first != last; ++first) {
+					if(_comp(value, *first)) {
 						return (first);
+					}
+				}
 				return (last);
 			}
 
@@ -509,24 +541,23 @@ namespace ft {
 			pair<const_iterator, const_iterator> equal_range(const value_type &value) const {
 				return (ft::make_pair(lower_bound(value), upper_bound(value)));
 			}
-
-
-			template<typename t_Content, typename t_Compare, typename t_Alloc>
-			friend bool operator<(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
-				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-			}
-
-			template<typename t_Content, typename t_Compare, typename t_Alloc>
-			friend bool operator>(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
-				return (lhs < rhs);
-			}
-
-			template<typename t_Content, typename t_Compare, typename t_Alloc>
-			friend bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
-				return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-			}
 	
 	}; //tree
+
+	template<typename t_Content, typename t_Compare, typename t_Alloc>
+	bool operator<(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template<typename t_Content, typename t_Compare, typename t_Alloc>
+		bool operator>(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
+		return (lhs < rhs);
+	}
+
+	template<typename t_Content, typename t_Compare, typename t_Alloc>
+	bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
+		return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
 	
 } // namespace ft
 

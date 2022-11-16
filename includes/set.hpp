@@ -14,6 +14,7 @@
 #ifndef SET_HPP
 # define SET_HPP
 
+# include <memory>
 # include "tree/rb_tree.hpp" 
 # include "utils/utils.h"
 
@@ -91,17 +92,17 @@ namespace ft
 
 			iterator insert( iterator position, const value_type& x) {
 				(void)position;
-				return tree_.insert(x).first;
+				return tree_.insert_node(x).first;
 			}
 
 			template<typename InputIterator>
 			void insert(InputIterator first, InputIterator last) {
 				while (first!=last)
-					tree_.insert(*first++);
+					tree_.insert_node(*first++);
 			}
 
 			void erase(iterator position) {
-				tree_.erase(*position);
+				tree_.delete_node(*position);
 			}
 
 			size_type erase(const Key& x) {
@@ -126,7 +127,7 @@ namespace ft
 			key_compare key_comp() const { return (value_comp()); }
 
 // set operations:
-			iterator find(const key_type& x) { return tree_.find(x); }
+			iterator find(const key_type& x) { return tree_.find_s(x); }
 			size_type count(const key_type &x) const { return tree_.count(x); }
 
 			iterator lower_bound(const key_type& x) { return tree_.lower_bound(x); }
