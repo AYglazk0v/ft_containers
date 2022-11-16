@@ -424,6 +424,7 @@ namespace ft {
 			}
 
 			value_compare value_compare() const {return comp_};
+			allocator_type get_allocator() const {return alloc_val_};
 
 			iterator find(const value_type &value) {
 				node_pointer find_res = search(value, root_);

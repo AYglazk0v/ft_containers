@@ -3,6 +3,7 @@
 
 # include "tree/rb_tree.hpp"
 # include "utils/utils.h"
+# include <functional>
 
 namespace ft {
 	
@@ -183,6 +184,7 @@ namespace ft {
 
 	}; //map
 
+// specialized algorithms:
 	template<class t_Key, class t_T, class t_Compare, class t_Alloc>
 	void swap(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs, const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
 		lhs.swap(rhs);
