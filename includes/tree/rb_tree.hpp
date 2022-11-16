@@ -481,7 +481,27 @@ namespace ft {
 				return (ft::make_pair(lower_bound(value), upper_bound(value)));
 			}
 
-	};
+
+			template<class t_Content, class t_Compare, class t_Alloc>
+			friend bool operator<(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs)
+			{
+				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			}
+
+			template<class t_Content, class t_Compare, class t_Alloc>
+			friend bool operator>(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs)
+			{
+				return (lhs < rhs);
+			}
+
+			template<class t_Content, class t_Compare, class t_Alloc>
+			friend bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs)
+			{
+				return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			}
+	
+	}; //tree
+	
 } // namespace ft
 
 #endif
