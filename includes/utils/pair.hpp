@@ -26,27 +26,27 @@ namespace ft {
 			return *this;
 		}
 	
-		friend bool operator==(const pair<key, value>& lhs, pair<key, value>& rhs) {
+		friend bool operator==(const pair<key, value>& lhs, const pair<key, value>& rhs) {
 			return lhs.first_ == rhs.first_ && lhs.second_ == rhs.second_;
 		}
 	
-		friend bool operator!=(const pair<key, value>& lhs, pair<key, value>& rhs) {
+		friend bool operator!=(const pair<key, value>& lhs, const pair<key, value>& rhs) {
 			return !(lhs == rhs);
 		}
 		
-		friend bool operator<(const pair<key, value>& lhs, pair<key, value>& rhs) {
+		friend bool operator<(const pair<key, value>& lhs, const pair<key, value>& rhs) {
 			return lhs.first_ < rhs.first_ || (lhs.first_ <= rhs.first_ && lhs.second_ < rhs.second_);
 		}
 	
-		friend bool operator<=(const pair<key, value>& lhs, pair<key, value>& rhs) {
+		friend bool operator<=(const pair<key, value>& lhs, const pair<key, value>& rhs) {
 			return !(rhs < lhs);
 		}
 	
-		friend bool operator>(const pair<key, value>& lhs, pair<key, value>& rhs) {
+		friend bool operator>(const pair<key, value>& lhs, const pair<key, value>& rhs) {
 			return rhs < lhs;
 		}
 	
-		friend bool operator>=(const pair<key, value>& lhs, pair<key, value>& rhs) {
+		friend bool operator>=(const pair<key, value>& lhs, const pair<key, value>& rhs) {
 			return !(lhs < rhs);
 		}
 	};

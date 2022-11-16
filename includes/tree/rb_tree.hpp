@@ -58,8 +58,6 @@ namespace ft {
 				return node;
 			}
 
-
-
 			void destroy(node_pointer node) {
 				if (node != nil_) {
 					destroy(node->right_);
@@ -177,7 +175,7 @@ namespace ft {
 				rhs.nil_ = tmp_nil;
 				rhs.root_ = tmp_root;
 				rhs.comp_ = tmp_cmp;
-				rhs.size_ - tmp_sz;
+				rhs.size_ = tmp_sz;
 			}
 
 			void left_rotate(node_pointer node) {
@@ -485,19 +483,20 @@ namespace ft {
 			}
 
 
-			template<class t_Content, class t_Compare, class t_Alloc>
+			template<typename t_Content, typename t_Compare, typename t_Alloc>
 			friend bool operator<(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 			}
 
-			template<class t_Content, class t_Compare, class t_Alloc>
+			template<typename t_Content, typename t_Compare, typename t_Alloc>
 			friend bool operator>(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (lhs < rhs);
 			}
 
-			template<class t_Content, class t_Compare, class t_Alloc>
+			template<typename t_Content, typename t_Compare, typename t_Alloc>
 			friend bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+				return (lhs.size() == rhs.size());
 			}
 	
 	}; //tree

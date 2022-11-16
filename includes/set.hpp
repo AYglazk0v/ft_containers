@@ -49,7 +49,7 @@ namespace ft
 				tree_(tree_type(comp, alloc)) 
 			{}
 
-			template< class InputIterator >
+			template< typename InputIterator >
 			set(InputIterator first,
 					InputIterator last,
 					const Compare & comp = Compare(),
@@ -94,7 +94,7 @@ namespace ft
 				return tree_.insert(x).first;
 			}
 
-			template<class InputIterator>
+			template<typename InputIterator>
 			void insert(InputIterator first, InputIterator last) {
 				while (first!=last)
 					tree_.insert(*first++);
@@ -133,32 +133,32 @@ namespace ft
 			iterator upper_bound(const key_type& x) { return tree_.upper_bound(x); }
 			pair<iterator, iterator> equal_range(const key_type & x) { return tree_.equal_range(x); }
 
-			template<class t_Key, class t_Compare, class t_Alloc>
+			template<typename t_Key, typename t_Compare, typename t_Alloc>
 			friend bool operator==(const set<t_Key, t_Compare, t_Alloc>& lhs, const set<t_Key, t_Compare, t_Alloc>& rhs) {
 				return lhs.tree_ == rhs.tree_;
 			}
 
-			template<class t_Key, class t_Compare, class t_Alloc>
+			template<typename t_Key, typename t_Compare, typename t_Alloc>
 			friend bool operator!=(const set<t_Key, t_Compare, t_Alloc>& lhs, const set<t_Key, t_Compare, t_Alloc>& rhs) {
 				return !(lhs == rhs);
 			}
 
-			template<class t_Key, class t_Compare, class t_Alloc>
+			template<typename t_Key, typename t_Compare, typename t_Alloc>
 			friend bool operator<(const set<t_Key, t_Compare, t_Alloc>& lhs, const set<t_Key, t_Compare, t_Alloc>& rhs) {
 				return lhs.tree_ < rhs.tree_;
 			}
 
-			template<class t_Key, class t_Compare, class t_Alloc>
+			template<typename t_Key, typename t_Compare, typename t_Alloc>
 			friend bool operator>(const set<t_Key, t_Compare, t_Alloc>& lhs, const set<t_Key, t_Compare, t_Alloc>& rhs) {
 				return rhs < lhs;
 			}
 
-			template<class t_Key, class t_Compare, class t_Alloc>
+			template<typename t_Key, typename t_Compare, typename t_Alloc>
 			friend bool operator<=(const set<t_Key, t_Compare, t_Alloc>& lhs, const set<t_Key, t_Compare, t_Alloc>& rhs) {
 				return !(lhs > rhs);
 			}
 
-			template<class t_Key, class t_Compare, class t_Alloc>
+			template<typename t_Key, typename t_Compare, typename t_Alloc>
 			friend bool operator>=(const set<t_Key, t_Compare, t_Alloc>& lhs, const set<t_Key, t_Compare, t_Alloc>& rhs) {
 				return !(lhs < rhs);
 			}
@@ -166,7 +166,7 @@ namespace ft
 	}; //namespace set
 
 // specialized algorithms:
-	template<class Key,class Compare, class Alloc>
+	template<typename Key,typename Compare, typename Alloc>
 	void swap(const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs) {
 		lhs.swap(rhs);
 	}
