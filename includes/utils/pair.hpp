@@ -11,7 +11,9 @@ namespace ft {
 		second_type second_;
 	
 		pair(): first_(), second_() {}
-	
+
+		pair(const key& f, const value& s) : first_(f), second_(s) {}
+
 		template<typename U, typename V>
 		pair (const pair<U, V>& p) : first_(p.first_), second_(p.second_) {}
 	
@@ -49,7 +51,7 @@ namespace ft {
 		}
 	};
 
-	template<typename T1, typename T2> pair<T1, T2> make_pair(const T1& key, const T2& value) { return pair<T1,T2>(key, value); }
+	template<typename T1, typename T2> pair<T1, T2> make_pair(const T1& key, const T2& value) { return pair<T1, T2>(key, value); }
 
 }//namespace ft
 #endif

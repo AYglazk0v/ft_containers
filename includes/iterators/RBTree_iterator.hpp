@@ -34,7 +34,7 @@ namespace ft {
 			}
 
 			RBTree_iterator& operator=(const RBTree_iterator<clear_value_type>& rhs) {
-				node_ = rhs.node_();
+				node_ = rhs.node_;
 				return *this;
 			}
 

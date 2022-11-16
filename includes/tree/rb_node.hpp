@@ -17,14 +17,14 @@ namespace ft {
 			NodeColor	type_;
 			Value*		value_;
 
-			RB_Node(pointer parent, pointer left, pointer right, NodeColor type = black, Value value = NULL) :
+			RB_Node(pointer parent, pointer left, pointer right, NodeColor type = black, Value *value = NULL) :
 					parent_(parent), left_(left), right_(right), type_(type), value_(value) { }
 			
-			RB_Node(reference &rhs) {
+			RB_Node(const RB_Node &rhs) {
 				*this = rhs;
 			}
 
-			RB_Node operator=(reference rhs) {
+			RB_Node operator=(const RB_Node& rhs) {
 				if (this == &rhs) {
 					return *this;
 				}

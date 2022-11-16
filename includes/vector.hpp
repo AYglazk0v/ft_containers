@@ -13,10 +13,9 @@
 //		https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_vector.h
 */
 
-#ifndef VECROT_HPP
+#ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <bits/allocator.h>
 # include "utils/utils.h"
 
 namespace ft {
@@ -93,7 +92,7 @@ namespace ft {
 				ptr_for_data_ = ptr_start_;
 				pointer rhs_start_ = rhs.ptr_start_;
 				while (rhs_start_ != rhs.ptr_for_data_) {
-					alloc_.constuct(ptr_for_data_++, *rhs_start_++);
+					alloc_.construct(ptr_for_data_++, *rhs_start_++);
 				}
 			}
 

@@ -1,11 +1,11 @@
 #ifndef RB_TREE_HPP
 # define RB_TREE_HPP
 
-# include <iostream>
 # include <memory>
 # include "../iterators/RBTree_iterator.hpp"
 # include "../iterators/iterator_reverse.hpp"
 # include "../utils/utils.h"
+# include "rb_node.hpp"
 
 //http://algolist.ru/ds/rbtree.php
 //https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/src/c%2B%2B98/tree.cc
@@ -44,15 +44,15 @@ namespace ft {
 			size_t 			size_;
 
 		private:
-            node_pointer tree_minimum(node_pointer node) const {
-                while (node != nil_ && node->left_ != nil_) {
-                    node = node->left_;
-                }
-                return node;
-            }
+			node_pointer tree_minimum(node_pointer node) const {
+				while (node != nil_ && node->left_ != nil_) {
+					node = node->left_;
+				}
+				return node;
+			}
 
 			node_pointer tree_maximum(node_pointer node) const {
-				while (node != nil && node->right_ != nil_) {
+				while (node != nil_ && node->right_ != nil_) {
 					node = node->right_;
 				}
 				return node;
@@ -427,7 +427,7 @@ namespace ft {
 				return nil_;
 			}
 
-			value_compare value_compare() const { return comp_; }
+			value_compare value_comp() const { return comp_; }
 			allocator_type get_allocator() const {return alloc_val_; }
 
 			iterator find(const value_type &value) {
@@ -444,8 +444,7 @@ namespace ft {
 				return (find(value) != end());
 			}
 
-			iterator lower_bound(const value_type& value)
-			{
+			iterator lower_bound(const value_type& value) {
 				iterator last = end();
 				for (iterator first = begin(); first != last; ++first)
 					if(!_comp(*first, value))
@@ -453,8 +452,7 @@ namespace ft {
 				return (last);
 			}
 
-			const_iterator lower_bound(const value_type& value) const
-			{
+			const_iterator lower_bound(const value_type& value) const {
 				const_iterator last = end();
 				for (const_iterator first = begin(); first != last; ++first)
 					if(!_comp(*first, value))
@@ -462,8 +460,7 @@ namespace ft {
 				return (last);
 			}
 
-			iterator upper_bound(const value_type& value)
-			{
+			iterator upper_bound(const value_type& value) {
 				iterator last = end();
 				for (iterator first = begin(); first != last; ++first)
 					if(_comp(value, *first))
@@ -471,8 +468,7 @@ namespace ft {
 				return (last);
 			}
 
-			const_iterator upper_bound(const value_type& value) const
-			{
+			const_iterator upper_bound(const value_type& value) const {
 				const_iterator last = end();
 				for (const_iterator first = begin(); first != last; ++first)
 					if(_comp(value, *first))
@@ -480,32 +476,27 @@ namespace ft {
 				return (last);
 			}
 
-			ft::pair<iterator, iterator> equal_range(const value_type &value)
-			{
+			ft::pair<iterator, iterator> equal_range(const value_type &value) {
 				return (ft::make_pair(lower_bound(value), upper_bound(value)));
 			}
 
-			pair<const_iterator, const_iterator> equal_range(const value_type &value) const
-			{
+			pair<const_iterator, const_iterator> equal_range(const value_type &value) const {
 				return (ft::make_pair(lower_bound(value), upper_bound(value)));
 			}
 
 
 			template<class t_Content, class t_Compare, class t_Alloc>
-			friend bool operator<(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs)
-			{
+			friend bool operator<(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 			}
 
 			template<class t_Content, class t_Compare, class t_Alloc>
-			friend bool operator>(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs)
-			{
+			friend bool operator>(const RBTree<t_Content, t_Compare, t_Alloc>& lhs,  const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (lhs < rhs);
 			}
 
 			template<class t_Content, class t_Compare, class t_Alloc>
-			friend bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs)
-			{
+			friend bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 			}
 	

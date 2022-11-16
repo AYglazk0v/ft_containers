@@ -34,7 +34,7 @@ namespace ft {
 			bool empty() const 				{ return c.empty();}
 			size_type size() const 			{ return c.size(); }
 			value_type& top()				{ return c.back(); }
-			const value_type& const			{ return c.back(); }
+			const value_type& top() const	{ return c.back(); }
 			void push (const value_type& x) { c.push_back(x); }
 			void pop()						{ c.pop_back(); }
 
@@ -48,33 +48,33 @@ namespace ft {
 
 	}; //stack 
 
-	template<typename T, typename Container = ft::vector<T>>
-	bool operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+	template<typename T>
+	bool operator==(const stack<T>& lhs, const stack<T>& rhs) {
 		return lhs.c == rhs.c;
 	}
 
-	template<typename T, typename Container = ft::vector<T>>
-	bool operator< (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+	template<typename T>
+	bool operator< (const stack<T>& lhs, const stack<T>& rhs) {
 		return lhs.c < rhs.c;
 	}
 
-	template<typename T, typename Container = ft::vector<T>>
-	bool operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+	template<typename T>
+	bool operator!=(const stack<T>& lhs, const stack<T>& rhs) {
 		return lhs.c != rhs.c;			
 	}
 
-	template<typename T, typename Container = ft::vector<T>>
-	bool operator> (const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+	template<typename T>
+	bool operator> (const stack<T>& lhs, const stack<T>& rhs) {
 		return lhs.c > rhs.c;
 	}
 
-	template<typename T, typename Container = ft::vector<T>>
-	bool operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+	template<typename T>
+	bool operator>=(const stack<T>& lhs, const stack<T>& rhs) {
 		return lhs.c >= rhs.c;
 	}
 
-	template<typename T, typename Container = ft::vector<T>>
-	bool operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
+	template<typename T>
+	bool operator<=(const stack<T>& lhs, const stack<T>& rhs) {
 		return lhs.c <= rhs.c;
 	}
 

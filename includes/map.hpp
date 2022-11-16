@@ -14,6 +14,7 @@
 # define MAP_HPP
 
 # include "tree/rb_tree.hpp"
+# include <memory>
 # include "utils/utils.h"
 # include <functional>
 
@@ -37,7 +38,7 @@ namespace ft {
 					value_compare(Compare c) : comp(c) {}
 				public:
 					bool operator()(const value_type& x, const value_type& y) const {
-						return comp(x.first, y.first);
+						return comp(x.first_, y.first_);
 						}
 			};
 
@@ -54,46 +55,53 @@ namespace ft {
 			typedef typename tree_type::const_reverse_iterator			const_reverse_iterator;
 
 		private:
+			allocator_type	alloc_;
 			tree_type		tree_;
+			key_compare		cmp_;
 		
 // construct/copy/destroy:
 		public:
 			explicit map(const key_compare& cmp = key_compare(), const allocator_type& alloc = allocator_type()) :
+					alloc_(alloc),
 					tree_(tree_type(cmp, alloc)),
+					cmp_(cmp)
 			{}
 
 			template<typename InputIterator>
 			map(InputIterator first, InputIterator last,
 					const key_compare& cmp = key_compare(),
 					const allocator_type& alloc = allocator_type()) :
-						tree_(tree_type(cmp, alloc)) {
+								alloc_(alloc),
+								tree_(tree_type(cmp, alloc)),
+								cmp_(cmp) {
 				insert(first, last);
 			}
 
-			map(const &map rhs) : tree_(tree_type(rhs.cmp_, rhs.alloc_)) {
+			map(const map& rhs) : tree_(tree_type(rhs.cmp_, rhs.alloc_)) {
 				*this = rhs;
 			}
 
 			map& operator=(const map& rhs) {
 				if (this == &rhs) {
-					return (*this)
+					return (*this);
 				}
+				alloc_ = rhs.alloc_;
 				tree_ = rhs.tree_;
+				cmp_ = rhs.cmp_;
 				return *this;
 			}
 
 			~map() {}
 
 // iterators:
-			iterator begin() noexcept { return tree_.begin(); }
-			const_iterator begin() const noexcept { return tree_.begin(); }
-			interator end() { return tree_.end(); }
-			const_iterator end() const noexcept { return tree_.end(); }
+			iterator begin() { return tree_.begin(); }
+			const_iterator begin() const { return tree_.begin(); }
+			iterator end() { return tree_.end(); }
+			const_iterator end() const { return tree_.end(); }
 			reverse_iterator rbegin() {return tree_.rbegin(); }
-			const_reverse_iterator rbegin() const noexcept { return tree_.rbegin(); }
+			const_reverse_iterator rbegin() const { return tree_.rbegin(); }
 			reverse_iterator rend() { return tree_.rend(); }
 			const_reverse_iterator rend() const { return tree_.rend(); }
-
 
 // capacity:
 			bool empty() const { return tree_.empty(); }
@@ -102,17 +110,17 @@ namespace ft {
 
 // element access:
 			mapped_type& operator[](const key_type& rhs) {
-				return (*((this->insert(ft::make_pair(rhs, mapped_type()))).first)).second; //UB?
+				return (*((this->insert(ft::make_pair(rhs, mapped_type()))).first_)).second_; //UB?
 			}
 
 // modifiers:
 			pair<iterator, bool> insert(const value_type& x) {
-				return tree_.insert(x);
+				return tree_.insert_node(x);
 			}
 
 			iterator insert(iterator position, const value_type& x) {
 				(void)position;
-				return tree_.insert(x).first;
+				return tree_.insert_node(x).first_;
 			}
 
 			template<class InputIterator>
@@ -160,13 +168,13 @@ namespace ft {
 
 			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
 			friend bool operator==(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
-					const map<_Key, t_T, t_Compare, t_Alloc>& rhs) {
+					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
 				return lhs.tree_ == rhs.tree_;
 			}
 
 			template<class t_Key, class t_T, class t_Compare, class t_Alloc>
 			friend bool operator!=(const map<t_Key, t_T, t_Compare, t_Alloc>& lhs,
-					const map<_Key, t_T, t_Compare, t_Alloc>& rhs) {
+					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
 				return !(lhs == rhs);
 			}
 
