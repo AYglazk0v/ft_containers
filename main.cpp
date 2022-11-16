@@ -302,12 +302,15 @@ int main(int argc, char** argv) {
 	}
 
 	std::cout << "[check operator[] and find()]:" << std::endl; 
-	map_int[5555] = 123;
+	map_int[5555] = 99999;
+	map_int[5557] = 99599;
 	mit = map_int.find(5555);
 	std::cout << "	find(5555) element :" << mit->first << " " << mit->second << std::endl;
 
-	std::cout << "count of 5555 elements :" << map_int.count(5555) << std::endl;
-	std::cout << "count of 5556 elements :" << map_int.count(5556) << std::endl;
+	std::cout << "[check count()]:" << std::endl; 
+	std::cout << "	count of 5555 elements :" << map_int.count(5555) << std::endl;
+	std::cout << "	count of 5556 elements :" << map_int.count(5556) << std::endl;
+	std::cout << "	count of 5557 elements :" << map_int.count(5557) << std::endl;
 
 	// mit = map_int.lower_bound(5000);
 	// ft::map<int, int>::iterator upper = map_int.upper_bound(5000);
@@ -319,5 +322,6 @@ int main(int argc, char** argv) {
 	// std::cout << "upper bound element: " << upper->first << " " << upper->second << std::endl;
 	// std::cout << "equal range lower: " << res1->first << " " << res1->second << std::endl;
 	// std::cout << "equal range upper: " << res2->first << " " << res2->second << std::endl;
+
 	return (0);
 }

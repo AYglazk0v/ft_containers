@@ -437,9 +437,37 @@ namespace ft {
 				node_pointer find_res = search(value, root_);
 				return (find_res == nil_ ? end() : const_iterator(find_res));
 			}
+			
+			node_pointer search_by_key(const value_type& value) const {
+				node_pointer ret_val = root_;
+				while (ret_val != nil_ ) {
+					if (ret_val->value_->first == value.first) {
+						return ret_val;
+					} else if (ret_val->value_->first > value.first) {
+						ret_val = ret_val->left_;
+					} else {
+						ret_val = ret_val->right_;
+					}
+				}
+				return nil_;
+			}
+			
+			iterator find_m(const value_type &value) {
+				node_pointer find_res = search_by_key(value);
+				return (find_res == nil_ ? end() : iterator(find_res));
+			}
+
+			const_iterator find_m(const value_type& value) const {
+				node_pointer find_res = search_by_key(value);
+				return (find_res == nil_ ? end() : const_iterator(find_res));
+			}
+			size_type count_m(const value_type& value) const {
+				node_pointer find_res = search_by_key(value);
+				return (find_res == nil_ ? 0 : 1);
+			}
 
 			size_type count(const value_type& value) const {
-				return (find(value) != end());
+				return find(value) == end() ? 0 : 1;
 			}
 
 			iterator lower_bound(const value_type& value) {

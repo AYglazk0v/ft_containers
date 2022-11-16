@@ -155,9 +155,9 @@ namespace ft {
 			value_compare value_comp() const { return tree_.value_comp(); }
 
 //map operations:
-			iterator	find(const Key& x) { return tree_.find(ft::make_pair(x, mapped_type())); }
+			iterator	find(const Key& x) { return tree_.find_m(ft::make_pair(x, mapped_type()));}
 			const_iterator find(const key_type& x) const { return tree_.find(ft::make_pair(x, mapped_type())); }
-			size_type count(const Key& x) const { return tree_.count(ft::make_pair(x, mapped_type())); }
+			size_type count(const Key& x) const { return tree_.count_m(ft::make_pair(x, mapped_type())); }
 			iterator lower_bound(const key_type& x) { return tree_.lower_bound(ft::make_pair(x, mapped_type())); }	
 			const_iterator lower_bound(const key_type& x) const { return tree_.lower_bound(ft::make_pair(x, mapped_type())); }	
 			iterator upper_bound(const key_type& x) { return tree_.upper_bound(ft::make_pair(x, mapped_type())); }	
