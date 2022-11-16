@@ -15,14 +15,6 @@
 
 #include <stdlib.h>
 
-template< class BiIterator >
-BiIterator getNext(BiIterator it, int n)
-{
-	while (--n)
-		++it;
-	return it;
-}
-
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
 struct Buffer
@@ -288,9 +280,7 @@ int main(int argc, char** argv) {
 
 	std::cout << "	Map size before clear " << map_int.size() << std::endl;
 	map_int.erase(++(++(map_int.begin())));
-	std::cout << "	Map size after 1 erase() " << map_int.size() << std::endl;
-	map_int.erase(getNext(map_int.begin(), 10), getNext(map_int.begin(), 30));
-	std::cout << "	Map size after erase(it,it) clear " << map_int.size() << std::endl;
+	std::cout << "	Map size after erase() " << map_int.size() << std::endl;
 
 	std::cout << "[check operator> and swap()]:" << std::endl; 
 	if (map_int > secondmap_int) {
@@ -312,16 +302,18 @@ int main(int argc, char** argv) {
 	std::cout << "	count of 5556 elements :" << map_int.count(5556) << std::endl;
 	std::cout << "	count of 5557 elements :" << map_int.count(5557) << std::endl;
 
-	// mit = map_int.lower_bound(5000);
-	// ft::map<int, int>::iterator upper = map_int.upper_bound(5000);
-	// ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> result = map_int.equal_range(5000);
-	// ft::map<int, int>::iterator res1 = result.first;
-	// ft::map<int, int>::iterator res2 = result.second;
+	std::cout << "[check lower/upper bound and range]: " << std::endl;
+	mit = map_int.lower_bound(5000);
+	ft::map<int, int>::iterator upper = map_int.upper_bound(5000);
+	ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> result = map_int.equal_range(5000);
+	ft::map<int, int>::iterator res1 = result.first;
+	ft::map<int, int>::iterator res2 = result.second;
 
-	// std::cout << "lower bound element: " << mit->first << " " << mit->second << std::endl;
-	// std::cout << "upper bound element: " << upper->first << " " << upper->second << std::endl;
-	// std::cout << "equal range lower: " << res1->first << " " << res1->second << std::endl;
-	// std::cout << "equal range upper: " << res2->first << " " << res2->second << std::endl;
+	std::cout << "	lower bound element: " << mit->first << " " << mit->second << std::endl;
+	std::cout << "	upper bound element: " << upper->first << " " << upper->second << std::endl;
+	std::cout << "	equal range lower: " << res1->first << " " << res1->second << std::endl;
+	std::cout << "	equal range upper: " << res2->first << " " << res2->second << std::endl;
+	
 
 	return (0);
 }

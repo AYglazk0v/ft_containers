@@ -473,7 +473,7 @@ namespace ft {
 			iterator lower_bound(const value_type& value) {
 				iterator last = end();
 				for (iterator first = begin(); first != last; ++first)
-					if(!_comp(*first, value))
+					if(!comp_(*first, value))
 						return (first);
 				return (last);
 			}
@@ -481,7 +481,7 @@ namespace ft {
 			const_iterator lower_bound(const value_type& value) const {
 				const_iterator last = end();
 				for (const_iterator first = begin(); first != last; ++first)
-					if(!_comp(*first, value))
+					if(!comp_(*first, value))
 						return (first);
 				return (last);
 			}
@@ -489,7 +489,7 @@ namespace ft {
 			iterator upper_bound(const value_type& value) {
 				iterator last = end();
 				for (iterator first = begin(); first != last; ++first)
-					if(_comp(value, *first))
+					if(comp_(value, *first))
 						return (first);
 				return (last);
 			}
