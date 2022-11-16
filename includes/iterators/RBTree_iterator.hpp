@@ -72,15 +72,7 @@ namespace ft {
 				return (tmp);
 			}
 
-			template<typename Iterator1, typename Iterator2>
-			friend bool operator==(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs) {
-				return (lhs.node() == rhs.node());
-			}
 
-			template<typename Iterator1, typename Iterator2>
-			friend bool operator!=(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs) {
-				return (lhs.node() != rhs.node());
-			}
 
 		private:
 			bool tree_is_left_child(node_ptr node) {
@@ -136,6 +128,16 @@ namespace ft {
 				}
 			}
 	};
+
+	template<typename Iterator1, typename Iterator2>
+	bool operator==(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs) {
+		return (lhs.node() == rhs.node());
+	}
+
+	template<typename Iterator1, typename Iterator2>
+		bool operator!=(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs) {
+		return (lhs.node() != rhs.node());
+	}
 
 	template<typename T>
 	class RBTree_const_iterator {		

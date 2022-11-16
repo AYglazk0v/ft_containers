@@ -496,7 +496,6 @@ namespace ft {
 			template<typename t_Content, typename t_Compare, typename t_Alloc>
 			friend bool operator==(const RBTree<t_Content, t_Compare, t_Alloc>& lhs, const RBTree<t_Content, t_Compare, t_Alloc>& rhs) {
 				return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-				return (lhs.size() == rhs.size());
 			}
 	
 	}; //tree
