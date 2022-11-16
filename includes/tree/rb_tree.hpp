@@ -265,166 +265,221 @@ namespace ft {
 				return ft::pair<node_pointer, bool>(insert_elem, true);
 			}
 
-		void insert_fixup(node_pointer node) {
-			while (node != root_ && node->parent_->type_ == red) {
-				if (node->parent_ == node->parent_->parent_->right_) {
-					node_pointer tmp_node = node->parent_->parent_->right_;
-					if ( tmp_node->type_ == red) {
-						node->parent_->type_ = black;
-						tmp_node->type_ = black;
-						node->parent_->parent_->type_ = red;
-						node = node->parent_->parent_;
-					} else {
-						if (node == node->parent_->right_) {
-							node = node->parent_;
-							left_rotate(node);
+			void insert_fixup(node_pointer node) {
+				while (node != root_ && node->parent_->type_ == red) {
+					if (node->parent_ == node->parent_->parent_->right_) {
+						node_pointer tmp_node = node->parent_->parent_->right_;
+						if ( tmp_node->type_ == red) {
+							node->parent_->type_ = black;
+							tmp_node->type_ = black;
+							node->parent_->parent_->type_ = red;
+							node = node->parent_->parent_;
+						} else {
+							if (node == node->parent_->right_) {
+								node = node->parent_;
+								left_rotate(node);
+							}
+							node->parent_->type_ = black;
+							node->parent_->parent_->type_ = red;
+							right_rotate(node->parent_->parent_);
 						}
-						node->parent_->type_ = black;
-						node->parent_->parent_->type_ = red;
-						right_rotate(node->parent_->parent_);
+					} else {
+						node_pointer tmp_node = node->parent_->parent_->left_;
+						if (tmp_node->type_ == red) {
+							node->parent_->type_ = black;
+							tmp_node->type_ = black;
+							node->parent_->parent_->type_ = red;
+							node = node->parent_->parent_;
+						} else {
+							if (node == node->parent_->left_) {
+								node = node->parent_;
+								right_rotate(node);
+							}
+							node->parent_->type_ = black;
+							node->parent_->parent_->type_ = red;
+							left_rotate(node->parent_->parent_);
+						}
+					}
+				}
+				root_->type_ = black;
+			}
+
+			bool delete_node(const value_type& value) {
+				node_pointer pos = search(value, root_);
+				if (pos == nil_) {
+					return false;
+				}
+				node_pointer x,y;
+				if (pos->left_ == nil_ || pos->right_ == nil_) {
+					y = pos;
+				} else {
+					y = pos->right_;
+					while (y->left_ != nil_) {
+						y = y->left_;
+					}
+				}
+				if (y->left_ != nil_) {
+					x = y->left_;
+				} else {
+					x = y->right_;
+				}
+				if (x != nil_) {
+					x->parent_ = y->parent_;
+				}
+				if (y->parent_ != nil_) {
+					if (y == y->parent_->left_) {
+						y->parent_->left_ = x;
+					} else {
+						y->parent_->right_ = x;
 					}
 				} else {
-					node_pointer tmp_node = node->parent_->parent_->left_;
-					if (tmp_node->type_ == red) {
-						node->parent_->type_ = black;
-						tmp_node->type_ = black;
-						node->parent_->parent_->type_ = red;
-						node = node->parent_->parent_;
-					} else {
-						if (node == node->parent_->left_) {
-							node = node->parent_;
-							right_rotate(node);
+					root_ = x;
+				}
+				if (y != pos) {
+					alloc_val_.destroy(pos->value_);
+					alloc_val_.deallocate(pos->value_, 1);
+					pos->value_ = y->value_;
+				} else {
+					alloc_val_.destroy(y->value_);
+					alloc_val_.deallocate(y->value_, 1);
+				}
+				alloc_node_.destroy(y);
+				alloc_node_.deallocate(y, 1);
+				nil_->parent_ = tree_maximum(root_);
+				delete_fixup(x);
+				--size_;
+				return true;
+			}
+
+			void delete_fixup(node_pointer node) {
+				while(node != root_ && node->type_ == black) {
+					if (node == node->parent_->left_) {
+						node_pointer w = node->parent_->right_;
+						if (w->type_ == red) {
+							w->type_ = black;
+							w->parent_->type_ = red;
+							left_rotate(node->parent_);
+							w = node->parent_->right_;
 						}
-						node->parent_->type_ = black;
-						node->parent_->parent_->type_ = red;
-						left_rotate(node->parent_->parent_);
+						if (w->left_->type_ == black && w->right_->type_ == black) {
+							w->type_ = red;
+							node = node->parent_;
+						} else {
+							if (w->right_->type_ == black) {
+								w->left_->type_ = black;
+								w->type_ = red;
+								right_rotate(w);
+								w = node->parent_->right_;
+							}
+							w->type_ = node->parent_->type_;
+							w->parent_->type_ = w->right_->type_ = black;
+							left_rotate(node->parent_);
+							node = root_;
+						}
+					} else {
+						node_pointer w = node->parent_->left_;
+						if (w->type_ == red) {
+							w->type_ = black;
+							w->parent_->type_ = red;
+							right_rotate(node->parent_);
+							w = node->parent_->left_;
+						}
+						if (w->right_->type_ == black && w->left_->type_ == black) {
+							w->type_ = red;
+							node = node->parent_;
+						} else {
+							if (w->left_->type_ == black) {
+								w->right_->type_ = black;
+								w->type_ = red;
+								left_rotate(w);
+								w = node->parent_->left_;
+							}
+							w->type_ = node->parent_->type_;
+							node->parent_->type_ = w->left_->type_ = black;
+							right_rotate(node->parent_);
+							node = root_;
+						}
 					}
 				}
-			}
-			root_->type_ = black;
-		}
-
-		bool delete_node(const value_type& value) {
-			node_pointer pos = search(value, root_);
-			if (pos == nil_) {
-				return false;
-			}
-			node_pointer x,y;
-			if (pos->left_ == nil_ || pos->right_ == nil_) {
-				y = pos;
-			} else {
-				y = pos->right_;
-				while (y->left_ != nil_) {
-					y = y->left_;
+				if (node->type_ != nil) {
+					node->type_ = black;
 				}
 			}
-			if (y->left_ != nil_) {
-				x = y->left_;
-			} else {
-				x = y->right_;
-			}
-			if (x != nil_) {
-				x->parent_ = y->parent_;
-			}
-			if (y->parent_ != nil_) {
-				if (y == y->parent_->left_) {
-					y->parent_->left_ = x;
-				} else {
-					y->parent_->right_ = x;
+
+			node_pointer search(const value_type& value, node_pointer node) const {
+				if (!node || node == nil_) {
+					return node_pointer(nil_);
 				}
-			} else {
-				root_ = x;
-			}
-			if (y != pos) {
-				alloc_val_.destroy(pos->value_);
-				alloc_val_.deallocate(pos->value_, 1);
-				pos->value_ = y->value_;
-			} else {
-				alloc_val_.destroy(y->value_);
-				alloc_val_.deallocate(y->value_, 1);
-			}
-			alloc_node_.destroy(y);
-			alloc_node_.deallocate(y, 1);
-			nil_->parent_ = tree_maximum(root_);
-			delete_fixup(x);
-			--size_;
-			return true;
-		}
-
-		node_pointer search(const value_type& value, node_pointer node) const {
-			if (!node || node == nil_) {
-				return node_pointer(nil_);
-			}
-			node_pointer ret_val = node;
-			while (ret_val != nil_) {
-				if (comp_(value, *ret_val->value_)) {
-					return (ret_val);
-				} else {
-					ret_val = comp_(value, *ret_val->value_) ? ret_val->left_ : ret_val->right_;
+				node_pointer ret_val = node;
+				while (ret_val != nil_) {
+					if (comp_(value, *ret_val->value_)) {
+						return (ret_val);
+					} else {
+						ret_val = comp_(value, *ret_val->value_) ? ret_val->left_ : ret_val->right_;
+					}
 				}
+				return nil_;
 			}
-			return nil_;
-		}
 
-		iterator find(const value_type &value) {
-			node_pointer find_res = search(value, root_);
-			return (find_res == nil_ ? end() : iterator(find_res));
-		}
+			iterator find(const value_type &value) {
+				node_pointer find_res = search(value, root_);
+				return (find_res == nil_ ? end() : iterator(find_res));
+			}
 
-		const_iterator find(const value_type& value) const {
-			node_pointer find_res = search(value, root_);
-			return (find_res == nil_ ? end() : const_iterator(find_res));
-		}
+			const_iterator find(const value_type& value) const {
+				node_pointer find_res = search(value, root_);
+				return (find_res == nil_ ? end() : const_iterator(find_res));
+			}
 
-		size_type count(const value_type& value) const {
-			return (find(value) != end());
-		}
+			size_type count(const value_type& value) const {
+				return (find(value) != end());
+			}
 
-		iterator lower_bound(const value_type& value)
-		{
-			iterator last = end();
-			for (iterator first = begin(); first != last; ++first)
-				if(!_comp(*first, value))
-					return (first);
-			return (last);
-		}
+			iterator lower_bound(const value_type& value)
+			{
+				iterator last = end();
+				for (iterator first = begin(); first != last; ++first)
+					if(!_comp(*first, value))
+						return (first);
+				return (last);
+			}
 
-		const_iterator lower_bound(const value_type& value) const
-		{
-			const_iterator last = end();
-			for (const_iterator first = begin(); first != last; ++first)
-				if(!_comp(*first, value))
-					return (first);
-			return (last);
-		}
+			const_iterator lower_bound(const value_type& value) const
+			{
+				const_iterator last = end();
+				for (const_iterator first = begin(); first != last; ++first)
+					if(!_comp(*first, value))
+						return (first);
+				return (last);
+			}
 
-		iterator upper_bound(const value_type& value)
-		{
-			iterator last = end();
-			for (iterator first = begin(); first != last; ++first)
-				if(_comp(value, *first))
-					return (first);
-			return (last);
-		}
+			iterator upper_bound(const value_type& value)
+			{
+				iterator last = end();
+				for (iterator first = begin(); first != last; ++first)
+					if(_comp(value, *first))
+						return (first);
+				return (last);
+			}
 
-		const_iterator upper_bound(const value_type& value) const
-		{
-			const_iterator last = end();
-			for (const_iterator first = begin(); first != last; ++first)
-				if(_comp(value, *first))
-					return (first);
-			return (last);
-		}
+			const_iterator upper_bound(const value_type& value) const
+			{
+				const_iterator last = end();
+				for (const_iterator first = begin(); first != last; ++first)
+					if(_comp(value, *first))
+						return (first);
+				return (last);
+			}
 
-		ft::pair<iterator, iterator> equal_range(const value_type &value)
-		{
-			return (ft::make_pair(lower_bound(value), upper_bound(value)));
-		}
+			ft::pair<iterator, iterator> equal_range(const value_type &value)
+			{
+				return (ft::make_pair(lower_bound(value), upper_bound(value)));
+			}
 
-		pair<const_iterator, const_iterator> equal_range(const value_type &value) const
-		{
-			return (ft::make_pair(lower_bound(value), upper_bound(value)));
-		}
+			pair<const_iterator, const_iterator> equal_range(const value_type &value) const
+			{
+				return (ft::make_pair(lower_bound(value), upper_bound(value)));
+			}
 
 	};
 } // namespace ft
