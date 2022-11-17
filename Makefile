@@ -18,7 +18,7 @@ HEADER	= 	./includes/map.hpp \
 			./includes/stack.hpp \
 			./includes/vector.hpp \
 			./includes/vector.hpp \
-			./includes/utils/utils.h \
+			./includes/utils/utils.hpp \
 			./includes/utils/pair.hpp \
 			./includes/utils/nullptr.hpp \
 			./includes/utils/lexicographical_cmp.hpp \
