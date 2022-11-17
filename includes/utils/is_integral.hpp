@@ -1,7 +1,7 @@
 #ifndef IS_INTEGRAL_HPP
 # define IS_INTEGRAL_HPP
 
-# include "utils.h"
+# include "utils.hpp"
 
 //https://en.cppreference.com/w/cpp/types/is_integral
 

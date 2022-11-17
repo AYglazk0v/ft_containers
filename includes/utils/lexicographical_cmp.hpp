@@ -1,7 +1,7 @@
 #ifndef LEXICOGRAPHICAL_CMP_HPP
 # define LEXICOGRAPHICAL_CMP_HPP
 
-# include "utils.h"
+# include "utils.hpp"
 
 //https://eel.is/c++draft/alg.lex.comparison
 //https://timsong-cpp.github.io/cppwp/n3337/draft.pdf

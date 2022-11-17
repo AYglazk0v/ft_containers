@@ -1,7 +1,7 @@
 #ifndef EQUAL_HPP
 # define EQUAL_HPP
 
-# include "utils.h"
+# include "utils.hpp"
 
 namespace ft {
 
