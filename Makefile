@@ -1,4 +1,4 @@
-NAME	=	ft_container	
+NAME	=	ft_containers
 
 OBJ_DIR	=	.obj
 
