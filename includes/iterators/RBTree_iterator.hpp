@@ -47,7 +47,7 @@ namespace ft {
 			}
 
 			pointer operator->() const {
-				return &(operator*());
+				return node_->value_;
 			}
 
 			RBTree_iterator& operator++() {
@@ -75,9 +75,6 @@ namespace ft {
 
 
 		private:
-			bool tree_is_left_child(node_ptr node) {
-				return node == node->parent_->left_;
-			}
 
 			node_ptr maximum(node_ptr node) const {
 				while (node->right_->type != nil) {
@@ -101,8 +98,8 @@ namespace ft {
 					node_ = minimum(node_->right_);
 					return ;
 				}
-			node_ptr tmp = node_->parent_;
-				while (!tree_is_left_child(tmp)) {
+				node_ptr tmp = node_->parent_;
+				while (tmp->type_ != nil && node_ == tmp->right_) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
@@ -119,7 +116,7 @@ namespace ft {
 					return ;
 				}
 				node_ptr tmp = node_->parent_;
-				while (tree_is_left_child(tmp)) {
+				while (tmp->type_!= nil && node_ == tmp->left_) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
@@ -178,7 +175,7 @@ namespace ft {
 			}
 
 			pointer operator->() const {
-				return &(operator*());
+				return node_->value_;
 			}
 
 			RBTree_const_iterator& operator++() {

@@ -33,6 +33,6 @@ clean	:
 
 fclean	:	clean
 	@$(RM) $(NAME)
-	@$(RM) .vscode
+	# @$(RM) .vscode
 
 re		: fclean all

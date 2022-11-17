@@ -114,7 +114,6 @@ int main(int argc, char** argv) {
 		std::cout << *it;
 	}
 	std::cout << std::endl;
-
 	std::cout << "____________________CHECK_VECTOR________________________" << std::endl;
 	vector_int.clear();
 
@@ -228,14 +227,14 @@ int main(int argc, char** argv) {
 	std::cout <<"	s1 <= s2 ?:" << std::boolalpha <<  (stack_int <= secondstack_int) << std::endl;
 	std::cout <<"	s1 > s2 ?:" <<  std::boolalpha << (stack_int > secondstack_int) << std::endl;
 	std::cout <<"	s1 >= s2 ?:" << std::boolalpha <<  (stack_int >= secondstack_int) << std::endl;
-	
 
 	std::cout << "____________________CHECK_MAP___________________________" << std::endl;
 	std::cout << "[check size() before clear()]: " << map_int.size() << std::endl;
 	map_int.clear();
 	std::cout << "[check size() after clear()]: " << map_int.size() << std::endl;
 	for (int i = 1; i < 1000; ++i)
-		map_int.insert(ft::make_pair(i, i * i % 4242 + 2121));
+		// map_int.insert(ft::make_pair(i, i * i % 4242 + 2121));
+		map_int.insert(ft::make_pair(i, i));
 	std::cout << "[check operator[]]: ";
 	std::cout << "1 element: " << map_int[1] << "; ";
 	std::cout << "55 element: " << map_int[55] << "; ";
@@ -350,59 +349,43 @@ int main(int argc, char** argv) {
 	}
 	std::cout << "iterators are equal" << std::endl;
 
-	// std::cout << "[check equals]: ";
-	// if (map_int != secondmap_int) {
-	// 	throw ("Maps should be equal");
-	// }
-	// std::cout << "maps equal" << std::endl;
+	std::cout << "[check equals]: ";
+	if (set_int != second_set_int) {
+		throw ("set should be equal");
+	}
+	std::cout << "set's equal" << std::endl;
 
-	// map_int[123] = 333;
+	std::cout << "[check erase()]: ";
+	set_int.erase(set_int.find(55));
+	std::cout << "size and find(55): " << set_int.size() << " " << std::boolalpha << (set_int.end() == set_int.find(55)) << std::endl;
+	std::cout << "[check iterators, print set]: " << std::endl;
+	for (ft::set<int>::iterator it = set_int.begin(), ite = set_int.end(); it != ite; ++it) {
+		std::cerr << *it << " ";
+	}
+	std::cout << std::endl <<"	set size before clear " << set_int.size() << std::endl;
+	set_int.erase(++(++(set_int.begin())));
+	std::cout << "	set size after erase() " << set_int.size() << std::endl;
 
-	// std::cout << "[check equals afte modification map_int]: ";
-	// if (map_int==secondmap_int) {
-	// 	throw ("Maps shouldn't be equal");
-	// }
-	// std::cout << "maps not equal" << std::endl;
-	
-	// std::cout << "[check erase()]: ";
-	// map_int.erase(123);
-	// std::cout << "	check[123]:" << map_int[123] << std::endl;
+	std::cout << "[check operator> and swap()]:" << std::endl; 
+	if (set_int > second_set_int) {
+		std::cout << "	now first map is bigger than second" << std::endl;
+		set_int.swap(second_set_int);
+		if (set_int > second_set_int)
+			throw ("Swap didn't work");
+		std::cout << "	now second is bigger than first -> swap -- OK" << std::endl;
+	}
 
-	// std::cout << "	Map size before clear " << map_int.size() << std::endl;
-	// map_int.erase(++(++(map_int.begin())));
-	// std::cout << "	Map size after erase() " << map_int.size() << std::endl;
+	std::cout << "[check lower/upper bound and range]: " << std::endl;
+	sit = set_int.lower_bound(50);
+	ft::set<int>::iterator supper = set_int.upper_bound(50);
+	ft::pair<ft::set<int>::iterator, ft::set<int>::iterator> sresult = set_int.equal_range(50);
+	ft::set<int>::iterator sres1 = sresult.first;
+	ft::set<int>::iterator sres2 = sresult.second;
 
-	// std::cout << "[check operator> and swap()]:" << std::endl; 
-	// if (map_int > secondmap_int) {
-	// 	std::cout << "	now first map is bigger than second" << std::endl;
-	// 	map_int.swap(secondmap_int);
-	// 	if (map_int > secondmap_int)
-	// 		throw ("Swap didn't work");
-	// 	std::cout << "	now second is bigger than first -> swap -- OK" << std::endl;
-	// }
-
-	// std::cout << "[check operator[] and find()]:" << std::endl; 
-	// map_int[5555] = 99999;
-	// map_int[5557] = 99599;
-	// mit = map_int.find(5555);
-	// std::cout << "	find(5555) element :" << mit->first << " " << mit->second << std::endl;
-
-	// std::cout << "[check count()]:" << std::endl; 
-	// std::cout << "	count of 5555 elements :" << map_int.count(5555) << std::endl;
-	// std::cout << "	count of 5556 elements :" << map_int.count(5556) << std::endl;
-	// std::cout << "	count of 5557 elements :" << map_int.count(5557) << std::endl;
-
-	// std::cout << "[check lower/upper bound and range]: " << std::endl;
-	// mit = map_int.lower_bound(5000);
-	// ft::map<int, int>::iterator upper = map_int.upper_bound(5000);
-	// ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> result = map_int.equal_range(5000);
-	// ft::map<int, int>::iterator res1 = result.first;
-	// ft::map<int, int>::iterator res2 = result.second;
-
-	// std::cout << "	lower bound element: " << mit->first << " " << mit->second << std::endl;
-	// std::cout << "	upper bound element: " << upper->first << " " << upper->second << std::endl;
-	// std::cout << "	equal range lower: " << res1->first << " " << res1->second << std::endl;
-	// std::cout << "	equal range upper: " << res2->first << " " << res2->second << std::endl;
+	std::cout << "	lower bound element: " << *sit << std::endl;
+	std::cout << "	upper bound element: " << *supper << std::endl;
+	std::cout << "	equal range lower: " << *sres1 << std::endl;
+	std::cout << "	equal range upper: " << *sres2 << std::endl;
 
 	(void)argc;
 	(void)argv;

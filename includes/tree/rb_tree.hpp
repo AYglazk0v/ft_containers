@@ -152,8 +152,8 @@ namespace ft {
 				}
 			}
 
-			iterator end() { return iterator(tree_maximum(root_)); }
-			const_iterator end() const { return const_iterator(tree_maximum(root_)); }
+			iterator end() { return iterator(tree_maximum(root_)->right_); }
+			const_iterator end() const { return const_iterator(tree_maximum(root_)->right_); }
 			iterator begin() { return iterator(tree_minimum(root_)); }
 			const_iterator begin() const { return const_iterator(tree_minimum(root_)); }
 			reverse_iterator rbegin() { return reverse_iterator(end()); }
@@ -162,8 +162,8 @@ namespace ft {
 			const_reverse_iterator rend() const { return const_reverse_iterator(begin()) ;}
 
 			void swap(RBTree &rhs) {
-				node_pointer tmp_nil = nil_;
-				node_pointer tmp_root = root_;
+				node_pointer tmpnil_ = nil_;
+				node_pointer tmproot_ = root_;
 				Compare tmp_cmp = comp_;
 				size_t tmp_sz = size_;
 				
@@ -172,8 +172,8 @@ namespace ft {
 				comp_ = rhs.comp_;
 				size_ = rhs.size_;
 				
-				rhs.nil_ = tmp_nil;
-				rhs.root_ = tmp_root;
+				rhs.nil_ = tmpnil_;
+				rhs.root_ = tmproot_;
 				rhs.comp_ = tmp_cmp;
 				rhs.size_ = tmp_sz;
 			}
@@ -263,39 +263,59 @@ namespace ft {
 				return ft::pair<node_pointer, bool>(insert_elem, true);
 			}
 
-			void insert_fixup(node_pointer node) {
-				while (node != root_ && node->parent_->type_ == red) {
-					if (node->parent_ == node->parent_->parent_->right_) {
-						node_pointer tmp_node = node->parent_->parent_->right_;
-						if ( tmp_node->type_ == red) {
-							node->parent_->type_ = black;
-							tmp_node->type_ = black;
-							node->parent_->parent_->type_ = red;
-							node = node->parent_->parent_;
-						} else {
-							if (node == node->parent_->right_) {
-								node = node->parent_;
-								left_rotate(node);
+			void insert_fixup(node_pointer x) {
+				while (x != root_ && x->parent_->type_ == red) 
+				{
+					/* we have a violation */
+					if (x->parent_ == x->parent_->parent_->left_) 
+					{
+						node_pointer y = x->parent_->parent_->right_;
+						if (y->type_ == red) 
+						{
+							/* uncle is RED */
+							x->parent_->type_ = black;
+							y->type_ = black;
+							x->parent_->parent_->type_ = red;
+							x = x->parent_->parent_;
+						} 
+						else 
+						{
+							/* uncle is BLACK */
+							if (x == x->parent_->right_) 
+							{
+								/* make x a left child */
+								x = x->parent_;
+								left_rotate(x);
 							}
-							node->parent_->type_ = black;
-							node->parent_->parent_->type_ = red;
-							right_rotate(node->parent_->parent_);
+							/* recolor and rotate */
+							x->parent_->type_ = black;
+							x->parent_->parent_->type_ = red;
+							right_rotate(x->parent_->parent_);
 						}
-					} else {
-						node_pointer tmp_node = node->parent_->parent_->left_;
-						if (tmp_node->type_ == red) {
-							node->parent_->type_ = black;
-							tmp_node->type_ = black;
-							node->parent_->parent_->type_ = red;
-							node = node->parent_->parent_;
-						} else {
-							if (node == node->parent_->left_) {
-								node = node->parent_;
-								right_rotate(node);
+					} 
+					else 
+					{
+						/* mirror image of above code */
+						node_pointer y = x->parent_->parent_->left_;
+						if (y->type_ == red) 
+						{
+							/* uncle is RED */
+							x->parent_->type_ = black;
+							y->type_ = black;
+							x->parent_->parent_->type_ = red;
+							x = x->parent_->parent_;
+						} 
+						else 
+						{
+							/* uncle is BLACK */
+							if (x == x->parent_->left_) 
+							{
+								x = x->parent_;
+								right_rotate(x);
 							}
-							node->parent_->type_ = black;
-							node->parent_->parent_->type_ = red;
-							left_rotate(node->parent_->parent_);
+							x->parent_->type_ = black;
+							x->parent_->parent_->type_ = red;
+							left_rotate(x->parent_->parent_);
 						}
 					}
 				}
@@ -304,153 +324,150 @@ namespace ft {
 
 			bool delete_node(const value_type& value) {
 				node_pointer pos = search(value, root_);
-				if (pos == nil_) {
+				if (pos == nil_) 
 					return false;
-				}
-				node_pointer x,y;
-				if (pos->left_ == nil_ || pos->right_ == nil_) {
+				node_pointer x, y;
+
+				if (pos->left_ == nil_ || pos->right_ == nil_) 
+				{		
+					/* y has a NIL node as a child */
 					y = pos;
-				} else {
+				}
+				else 
+				{
+					/* find tree successor with a NIL node as a child */
 					y = pos->right_;
-					while (y->left_ != nil_) {
+					while (y->left_ != nil_) 
 						y = y->left_;
-					}
 				}
-				if (y->left_ != nil_) {
+
+				/* x is y's only child */
+				if (y->left_ != nil_)
 					x = y->left_;
-				} else {
+				else
 					x = y->right_;
-				}
-				if (x != nil_) {
+
+				/* remove y from the parent chain */
+				if (x != nil_)
 					x->parent_ = y->parent_;
-				}
-				if (y->parent_ != nil_) {
-					if (y == y->parent_->left_) {
+				if (y->parent_ != nil_)
+					if (y == y->parent_->left_)
 						y->parent_->left_ = x;
-					} else {
+					else
 						y->parent_->right_ = x;
-					}
-				} else {
+				else
 					root_ = x;
-				}
-				if (y != pos) {
+
+				if (y != pos)
+				{
 					alloc_val_.destroy(pos->value_);
 					alloc_val_.deallocate(pos->value_, 1);
 					pos->value_ = y->value_;
-				} else {
+				}
+				else
+				{
 					alloc_val_.destroy(y->value_);
 					alloc_val_.deallocate(y->value_, 1);
 				}
+
 				alloc_node_.destroy(y);
 				alloc_node_.deallocate(y, 1);
+
 				nil_->parent_ = tree_maximum(root_);
 				delete_fixup(x);
-				--size_;
-				return true;
+				size_--;
+				return true;		
 			}
 
-			void delete_fixup(node_pointer node) {
-				while(node != root_ && node->type_ == black) {
-					if (node == node->parent_->left_) {
-						node_pointer w = node->parent_->right_;
-						if (w->type_ == red) {
+			void delete_fixup(node_pointer x) {
+				while (x != root_ && x->type_ == black) 
+				{
+					if (x == x->parent_->left_)
+					{
+						node_pointer w = x->parent_->right_;
+						if (w->type_ == red) 
+						{
 							w->type_ = black;
-							w->parent_->type_ = red;
-							left_rotate(node->parent_);
-							w = node->parent_->right_;
+							x->parent_->type_ = red;
+							left_rotate(x->parent_);
+							w = x->parent_->right_;
 						}
-						if (w->left_->type_ == black && w->right_->type_ == black) {
+						if (w->left_->type_==black && w->right_->type_==black)
+						{
 							w->type_ = red;
-							node = node->parent_;
-						} else {
-							if (w->right_->type_ == black) {
+							x = x->parent_;
+						}
+						else
+						{
+							if (w->right_->type_==black) 
+							{
 								w->left_->type_ = black;
 								w->type_ = red;
 								right_rotate(w);
-								w = node->parent_->right_;
+								w = x->parent_->right_;
 							}
-							w->type_ = node->parent_->type_;
-							w->parent_->type_ = w->right_->type_ = black;
-							left_rotate(node->parent_);
-							node = root_;
+							w->type_ = x->parent_->type_;
+							x->parent_->type_ = black;
+							w->right_->type_ = black;
+							left_rotate(x->parent_);
+							x = root_;
 						}
-					} else {
-						node_pointer w = node->parent_->left_;
-						if (w->type_ == red) {
+					}
+					else 
+					{
+						node_pointer w = x->parent_->left_;
+						if (w->type_==red)
+						{
 							w->type_ = black;
-							w->parent_->type_ = red;
-							right_rotate(node->parent_);
-							w = node->parent_->left_;
+							x->parent_->type_ = red;
+							right_rotate(x->parent_);
+							w = x->parent_->left_;
 						}
-						if (w->right_->type_ == black && w->left_->type_ == black) {
+						if (w->right_->type_ == black && w->left_->type_==black)
+						{
 							w->type_ = red;
-							node = node->parent_;
-						} else {
-							if (w->left_->type_ == black) {
+							x = x->parent_;
+						}
+						else
+						{
+							if (w->left_->type_==black)
+							{
 								w->right_->type_ = black;
 								w->type_ = red;
 								left_rotate(w);
-								w = node->parent_->left_;
+								w = x->parent_->left_;
 							}
-							w->type_ = node->parent_->type_;
-							node->parent_->type_ = w->left_->type_ = black;
-							right_rotate(node->parent_);
-							node = root_;
+							w->type_ = x->parent_->type_;
+							x->parent_->type_ = black;
+							w->left_->type_ = black;
+							right_rotate(x->parent_);
+							x = root_;
 						}
 					}
 				}
-				if (node->type_ != nil) {
-					node->type_ = black;
-				}
+				if (x->type_ != nil)
+					x->type_ = black;
 			}
 			
-			void clear() {
-				destroy(root_);
-				root_= nil_->parent_ = nil_;
-				size_ = 0;
-			}
+				void clear() {
+					destroy(root_);
+					root_= nil_->parent_ = nil_;
+					size_ = 0;
+				}
 
 			node_pointer search(const value_type& value, node_pointer node) const {
-				if (!node || node == nil_) {
+				if(!node || node == nil_)
 					return node_pointer(nil_);
-				}
-				node_pointer ret_val = node;
-				while (ret_val != nil_) {
-					if (comp_(value, *ret_val->value_)) {
-						return (ret_val);
-					} else {
-						ret_val = comp_(value, *ret_val->value_) ? ret_val->left_ : ret_val->right_;
-					}
-				}
-				return ret_val;
+				if (comp_(value, *node->value_))
+					return search(value, node->left_);
+				if (comp_(*node->value_, value))
+					return search(value, node->right_);
+				return node;
 			}
 
 			value_compare value_comp() const { return comp_; }
 			allocator_type get_allocator() const {return alloc_val_; }
 
-			node_pointer search_by_value(const value_type& value) const {
-				node_pointer ret_val = root_;
-				while (ret_val != nil_ ) {
-					if (*ret_val->value_ == value) {
-						return ret_val;
-					} else if (*ret_val->value_> value) {
-						ret_val = ret_val->left_;
-					} else {
-						ret_val = ret_val->right_;
-					}
-				}
-				return ret_val;
-			}
-			
-			iterator find_s(const value_type &value) {
-				node_pointer find_res = search_by_value(value);
-				return (find_res == nil_ ? end() : iterator(find_res));
-			}
-
-			const_iterator find_s(const value_type& value) const {
-				node_pointer find_res = search_by_value(value);
-				return (find_res == nil_ ? end() : const_iterator(find_res));
-			}
 
 			iterator find(const value_type &value) {
 				node_pointer find_res = search(value, root_);
@@ -462,36 +479,9 @@ namespace ft {
 				return (find_res == nil_ ? end() : const_iterator(find_res));
 			}
 			
-			node_pointer search_by_key(const value_type& value) const {
-				node_pointer ret_val = root_;
-				while (ret_val != nil_ ) {
-					if (ret_val->value_->first == value.first) {
-						return ret_val;
-					} else if (ret_val->value_->first > value.first) {
-						ret_val = ret_val->left_;
-					} else {
-						ret_val = ret_val->right_;
-					}
-				}
-				return nil_;
-			}
-			
-			iterator find_m(const value_type &value) {
-				node_pointer find_res = search_by_key(value);
-				return (find_res == nil_ ? end() : iterator(find_res));
-			}
-
-			const_iterator find_m(const value_type& value) const {
-				node_pointer find_res = search_by_key(value);
-				return (find_res == nil_ ? end() : const_iterator(find_res));
-			}
-			size_type count_m(const value_type& value) const {
-				node_pointer find_res = search_by_key(value);
-				return (find_res == nil_ ? 0 : 1);
-			}
-
 			size_type count(const value_type& value) const {
-				return find(value) == end() ? 0 : 1;
+				node_pointer find_res = search(value, root_);
+				return (find_res == nil_ ? 0 : 1);
 			}
 
 			iterator lower_bound(const value_type& value) {

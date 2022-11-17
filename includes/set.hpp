@@ -127,7 +127,7 @@ namespace ft
 			key_compare key_comp() const { return (value_comp()); }
 
 // set operations:
-			iterator find(const key_type& x) { return tree_.find_s(x); }
+			iterator find(const key_type& x) { return tree_.find(x); }
 			size_type count(const key_type &x) const { return tree_.count(x); }
 
 			iterator lower_bound(const key_type& x) { return tree_.lower_bound(x); }
