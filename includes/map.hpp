@@ -114,7 +114,6 @@ namespace ft {
 			}
 
 // modifiers:
-
 			pair<iterator, bool> insert(const value_type& x) {
 				return tree_.insert_node(x);
 			}
@@ -201,7 +200,6 @@ namespace ft {
 					const map<t_Key, t_T, t_Compare, t_Alloc>& rhs) {
 				return !(lhs < rhs);
 			}
-
 	}; //map
 
 // specialized algorithms:

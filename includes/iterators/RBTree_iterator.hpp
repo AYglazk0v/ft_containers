@@ -26,9 +26,9 @@ namespace ft {
 
 		public:
 			RBTree_iterator() {}
-
+			
 			RBTree_iterator(node_ptr node): node_(static_cast<node_ptr>(node)) {}
-
+			
 			RBTree_iterator(const RBTree_iterator<clear_value_type>& rhs) {
 				*this = rhs;
 			}
@@ -72,10 +72,7 @@ namespace ft {
 				return (tmp);
 			}
 
-
-
 		private:
-
 			node_ptr maximum(node_ptr node) const {
 				while (node->right_->type != nil) {
 					node = node->right_;
@@ -124,7 +121,7 @@ namespace ft {
 					node_ = tmp;
 				}
 			}
-	};
+	}; //RBTree_iterator
 
 	template<typename Iterator1, typename Iterator2>
 	bool operator==(const RBTree_iterator<Iterator1>& lhs, const RBTree_iterator<Iterator2>& rhs) {
@@ -234,7 +231,7 @@ namespace ft {
 					return ;
 				}
 				node_ptr tmp = node_->parent_;
-				while (!tree_is_left_child(tmp)) {
+				while (tmp->type_ != nil && node_ == tmp->right_) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
@@ -251,7 +248,7 @@ namespace ft {
 					return ;
 				}
 				node_ptr tmp = node_->parent_;
-				while (tree_is_left_child(tmp)) {
+				while (tmp->type_!= nil && node_ == tmp->left_) {
 					node_ = tmp;
 					tmp = tmp->parent_;
 				}
@@ -259,7 +256,7 @@ namespace ft {
 					node_ = tmp;
 				}
 			}
-	};
+	};//RBTree_const_iterator
 
 } // namespace ft
 

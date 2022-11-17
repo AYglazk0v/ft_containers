@@ -24,7 +24,6 @@ namespace ft {
 	class vector {
 		
 		public:
-
 //types:
 			typedef	T											value_type;
 			typedef	Allocator									allocator_type;
@@ -46,7 +45,6 @@ namespace ft {
 			pointer 		ptr_end_;
 
 		public:
-
 //construct/copy/destroy:
 			explicit vector(const Allocator& alloc = Allocator()):
 									alloc_(alloc),
@@ -242,7 +240,6 @@ namespace ft {
 			const_reference back() const { return *(ptr_for_data_ - 1); }
 	
 // modifiers:
-
 		public:		
 			void push_back(const value_type& value) {
 				if (ptr_for_data_ == ptr_end_) {

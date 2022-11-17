@@ -263,59 +263,39 @@ namespace ft {
 				return ft::pair<node_pointer, bool>(insert_elem, true);
 			}
 
-			void insert_fixup(node_pointer x) {
-				while (x != root_ && x->parent_->type_ == red) 
-				{
-					/* we have a violation */
-					if (x->parent_ == x->parent_->parent_->left_) 
-					{
-						node_pointer y = x->parent_->parent_->right_;
-						if (y->type_ == red) 
-						{
-							/* uncle is RED */
-							x->parent_->type_ = black;
+			void insert_fixup(node_pointer node) {
+				while (node != root_ && node->parent_->type_ == red) {
+					if (node->parent_ == node->parent_->parent_->left_) {
+						node_pointer y = node->parent_->parent_->right_;
+						if (y->type_ == red) {
+							node->parent_->type_ = black;
 							y->type_ = black;
-							x->parent_->parent_->type_ = red;
-							x = x->parent_->parent_;
-						} 
-						else 
-						{
-							/* uncle is BLACK */
-							if (x == x->parent_->right_) 
-							{
-								/* make x a left child */
-								x = x->parent_;
-								left_rotate(x);
+							node->parent_->parent_->type_ = red;
+							node = node->parent_->parent_;
+						} else {
+							if (node == node->parent_->right_) {
+								node = node->parent_;
+								left_rotate(node);
 							}
-							/* recolor and rotate */
-							x->parent_->type_ = black;
-							x->parent_->parent_->type_ = red;
-							right_rotate(x->parent_->parent_);
+							node->parent_->type_ = black;
+							node->parent_->parent_->type_ = red;
+							right_rotate(node->parent_->parent_);
 						}
-					} 
-					else 
-					{
-						/* mirror image of above code */
-						node_pointer y = x->parent_->parent_->left_;
-						if (y->type_ == red) 
-						{
-							/* uncle is RED */
-							x->parent_->type_ = black;
+					} else {
+						node_pointer y = node->parent_->parent_->left_;
+						if (y->type_ == red) {
+							node->parent_->type_ = black;
 							y->type_ = black;
-							x->parent_->parent_->type_ = red;
-							x = x->parent_->parent_;
-						} 
-						else 
-						{
-							/* uncle is BLACK */
-							if (x == x->parent_->left_) 
-							{
-								x = x->parent_;
-								right_rotate(x);
+							node->parent_->parent_->type_ = red;
+							node = node->parent_->parent_;
+						} else {
+							if (node == node->parent_->left_) {
+								node = node->parent_;
+								right_rotate(node);
 							}
-							x->parent_->type_ = black;
-							x->parent_->parent_->type_ = red;
-							left_rotate(x->parent_->parent_);
+							node->parent_->type_ = black;
+							node->parent_->parent_->type_ = red;
+							left_rotate(node->parent_->parent_);
 						}
 					}
 				}
@@ -324,136 +304,113 @@ namespace ft {
 
 			bool delete_node(const value_type& value) {
 				node_pointer pos = search(value, root_);
-				if (pos == nil_) 
+				if (pos == nil_) {
 					return false;
-				node_pointer x, y;
-
-				if (pos->left_ == nil_ || pos->right_ == nil_) 
-				{		
-					/* y has a NIL node as a child */
+				}
+				node_pointer node, y;
+				if (pos->left_ == nil_ || pos->right_ == nil_) {		
 					y = pos;
-				}
-				else 
-				{
-					/* find tree successor with a NIL node as a child */
+				} else {
 					y = pos->right_;
-					while (y->left_ != nil_) 
+					while (y->left_ != nil_) {
 						y = y->left_;
+					}
 				}
-
-				/* x is y's only child */
-				if (y->left_ != nil_)
-					x = y->left_;
-				else
-					x = y->right_;
-
-				/* remove y from the parent chain */
-				if (x != nil_)
-					x->parent_ = y->parent_;
-				if (y->parent_ != nil_)
-					if (y == y->parent_->left_)
-						y->parent_->left_ = x;
-					else
-						y->parent_->right_ = x;
-				else
-					root_ = x;
-
-				if (y != pos)
-				{
+				if (y->left_ != nil_) {
+					node = y->left_;
+				} else {
+					node = y->right_;
+				}
+				if (node != nil_) {
+					node->parent_ = y->parent_;
+				}
+				if (y->parent_ != nil_) {
+					if (y == y->parent_->left_) {
+						y->parent_->left_ = node;
+					} else {
+						y->parent_->right_ = node;
+					}
+				} else {
+					root_ = node;
+				}
+				if (y != pos) {
 					alloc_val_.destroy(pos->value_);
 					alloc_val_.deallocate(pos->value_, 1);
 					pos->value_ = y->value_;
-				}
-				else
-				{
+				} else {
 					alloc_val_.destroy(y->value_);
 					alloc_val_.deallocate(y->value_, 1);
 				}
-
 				alloc_node_.destroy(y);
 				alloc_node_.deallocate(y, 1);
-
 				nil_->parent_ = tree_maximum(root_);
-				delete_fixup(x);
+				delete_fixup(node);
 				size_--;
 				return true;		
 			}
 
-			void delete_fixup(node_pointer x) {
-				while (x != root_ && x->type_ == black) 
-				{
-					if (x == x->parent_->left_)
-					{
-						node_pointer w = x->parent_->right_;
-						if (w->type_ == red) 
-						{
+			void delete_fixup(node_pointer node) {
+				while (node != root_ && node->type_ == black) {
+					if (node == node->parent_->left_) {
+						node_pointer w = node->parent_->right_;
+						if (w->type_ == red) {
 							w->type_ = black;
-							x->parent_->type_ = red;
-							left_rotate(x->parent_);
-							w = x->parent_->right_;
+							node->parent_->type_ = red;
+							left_rotate(node->parent_);
+							w = node->parent_->right_;
 						}
-						if (w->left_->type_==black && w->right_->type_==black)
-						{
+						if (w->left_->type_==black && w->right_->type_==black) {
 							w->type_ = red;
-							x = x->parent_;
-						}
-						else
-						{
-							if (w->right_->type_==black) 
-							{
+							node = node->parent_;
+						} else {
+							if (w->right_->type_==black) {
 								w->left_->type_ = black;
 								w->type_ = red;
 								right_rotate(w);
-								w = x->parent_->right_;
+								w = node->parent_->right_;
 							}
-							w->type_ = x->parent_->type_;
-							x->parent_->type_ = black;
+							w->type_ = node->parent_->type_;
+							node->parent_->type_ = black;
 							w->right_->type_ = black;
-							left_rotate(x->parent_);
-							x = root_;
+							left_rotate(node->parent_);
+							node = root_;
 						}
-					}
-					else 
-					{
-						node_pointer w = x->parent_->left_;
-						if (w->type_==red)
-						{
+					} else {
+						node_pointer w = node->parent_->left_;
+						if (w->type_==red) {
 							w->type_ = black;
-							x->parent_->type_ = red;
-							right_rotate(x->parent_);
-							w = x->parent_->left_;
+							node->parent_->type_ = red;
+							right_rotate(node->parent_);
+							w = node->parent_->left_;
 						}
-						if (w->right_->type_ == black && w->left_->type_==black)
-						{
+						if (w->right_->type_ == black && w->left_->type_==black) {
 							w->type_ = red;
-							x = x->parent_;
-						}
-						else
-						{
-							if (w->left_->type_==black)
-							{
+							node = node->parent_;
+						} else {
+							if (w->left_->type_==black) {
 								w->right_->type_ = black;
 								w->type_ = red;
 								left_rotate(w);
-								w = x->parent_->left_;
+								w = node->parent_->left_;
 							}
-							w->type_ = x->parent_->type_;
-							x->parent_->type_ = black;
+							w->type_ = node->parent_->type_;
+							node->parent_->type_ = black;
 							w->left_->type_ = black;
-							right_rotate(x->parent_);
-							x = root_;
+							right_rotate(node->parent_);
+							node = root_;
 						}
 					}
 				}
-				if (x->type_ != nil)
-					x->type_ = black;
+				if (node->type_ != nil) {
+					node->type_ = black;
+				}
 			}
 			
-				void clear() {
-					destroy(root_);
-					root_= nil_->parent_ = nil_;
-					size_ = 0;
-				}
+			void clear() {
+				destroy(root_);
+				root_= nil_->parent_ = nil_;
+				size_ = 0;
+			}
 
 			node_pointer search(const value_type& value, node_pointer node) const {
 				if(!node || node == nil_)

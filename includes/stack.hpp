@@ -38,7 +38,6 @@ namespace ft {
 			void push (const value_type& x) { c.push_back(x); }
 			void pop()						{ c.pop_back(); }
 
-
 			friend bool operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs) {
 				return lhs.c == rhs.c;
 			}

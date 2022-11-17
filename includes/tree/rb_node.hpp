@@ -35,8 +35,7 @@ namespace ft {
 				return *this;
 			}
 			
-			~RB_Node() {
-			}
+			~RB_Node() {}
 	};
 
 } //namespace ft
