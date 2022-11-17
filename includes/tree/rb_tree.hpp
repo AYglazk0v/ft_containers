@@ -415,11 +415,17 @@ namespace ft {
 			node_pointer search(const value_type& value, node_pointer node) const {
 				if(!node || node == nil_)
 					return node_pointer(nil_);
-				if (comp_(value, *node->value_))
-					return search(value, node->left_);
-				if (comp_(*node->value_, value))
-					return search(value, node->right_);
-				return node;
+				node_pointer ret_val = node;
+				while (ret_val != nil_) {
+					if (comp_(value, *ret_val->value_)){
+						ret_val = ret_val->left_;
+					} else if (comp_(*ret_val->value_, value)) {
+						ret_val = ret_val->right_;
+					} else {
+						return ret_val;
+					}
+				}
+				return ret_val;
 			}
 
 			value_compare value_comp() const { return comp_; }
