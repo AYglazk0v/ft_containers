@@ -17,7 +17,7 @@
 
 #include <stdlib.h>
 
-#define MAX_RAM 4294967296
+#define MAX_RAM 2000000000
 #define BUFFER_SIZE 4096
 struct Buffer
 {
@@ -201,8 +201,9 @@ int main(int argc, char** argv) {
 	std::cout << "#create new stack"<< std::endl;
 	stack_int = ft::stack<int>();
 	std::cout << "	stack is empty? " << std::boolalpha <<stack_int.empty() << std::endl;
-	for (int i = 1; i < 100; ++i)
+	for (int i = 1; i < 100; ++i) {
 		stack_int.push(i * i % 4242 + 2121);
+	}
 	std::cout << "	stack is empty? " << std::boolalpha <<stack_int.empty() << std::endl;
 	std::cout << "	top element = " << stack_int.top() << std::endl; 
 	stack_int.pop();
@@ -232,9 +233,10 @@ int main(int argc, char** argv) {
 	std::cout << "[check size() before clear()]: " << map_int.size() << std::endl;
 	map_int.clear();
 	std::cout << "[check size() after clear()]: " << map_int.size() << std::endl;
-	for (int i = 1; i < 1000; ++i)
+	for (int i = 1; i < 1000; ++i) {
 		// map_int.insert(ft::make_pair(i, i * i % 4242 + 2121));
 		map_int.insert(ft::make_pair(i, i));
+	}
 	std::cout << "[check operator[]]: ";
 	std::cout << "1 element: " << map_int[1] << "; ";
 	std::cout << "55 element: " << map_int[55] << "; ";
@@ -287,8 +289,9 @@ int main(int argc, char** argv) {
 	if (map_int > secondmap_int) {
 		std::cout << "	now first map is bigger than second" << std::endl;
 		map_int.swap(secondmap_int);
-		if (map_int > secondmap_int)
+		if (map_int > secondmap_int) {
 			throw ("Swap didn't work");
+		}
 		std::cout << "	now second is bigger than first -> swap -- OK" << std::endl;
 	}
 
@@ -320,8 +323,9 @@ int main(int argc, char** argv) {
 	std::cout << "[check size() before clear()]: " << set_int.size() << std::endl;
 	set_int.clear();
 	std::cout << "[check size() after clear()]: " << set_int.size() << std::endl;
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 1000; ++i) {
 		set_int.insert(set_int.begin(), i);
+	}
 	std::cout << "[check size() after loop]: " << set_int.size() << std::endl;
 	std::cout << "[check find()]: ";
 	std::cout << "1 element: " << *set_int.find(1) << "; ";
@@ -370,8 +374,9 @@ int main(int argc, char** argv) {
 	if (set_int > second_set_int) {
 		std::cout << "	now first map is bigger than second" << std::endl;
 		set_int.swap(second_set_int);
-		if (set_int > second_set_int)
+		if (set_int > second_set_int) {
 			throw ("Swap didn't work");
+		}
 		std::cout << "	now second is bigger than first -> swap -- OK" << std::endl;
 	}
 
@@ -387,7 +392,5 @@ int main(int argc, char** argv) {
 	std::cout << "	equal range lower: " << *sres1 << std::endl;
 	std::cout << "	equal range upper: " << *sres2 << std::endl;
 
-	(void)argc;
-	(void)argv;
 	return (0);
 }

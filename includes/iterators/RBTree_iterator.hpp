@@ -47,7 +47,7 @@ namespace ft {
 			}
 
 			pointer operator->() const {
-				return node_->value_;
+				return &(operator*());
 			}
 
 			RBTree_iterator& operator++() {
