@@ -234,7 +234,6 @@ int main(int argc, char** argv) {
 	map_int.clear();
 	std::cout << "[check size() after clear()]: " << map_int.size() << std::endl;
 	for (int i = 1; i < 1000; ++i) {
-		// map_int.insert(ft::make_pair(i, i * i % 4242 + 2121));
 		map_int.insert(ft::make_pair(i, i));
 	}
 	std::cout << "[check operator[]]: ";
@@ -307,8 +306,8 @@ int main(int argc, char** argv) {
 	std::cout << "	count of 5557 elements :" << map_int.count(5557) << std::endl;
 
 	std::cout << "[check lower/upper bound and range]: " << std::endl;
-	mit = map_int.lower_bound(5000);
-	ft::map<int, int>::iterator upper = map_int.upper_bound(5000);
+	mit = map_int.lower_bound(4242);
+	ft::map<int, int>::iterator upper = map_int.upper_bound(4242);
 	ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> result = map_int.equal_range(5000);
 	ft::map<int, int>::iterator res1 = result.first;
 	ft::map<int, int>::iterator res2 = result.second;
